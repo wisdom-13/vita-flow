@@ -5,9 +5,17 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import './styles/index.css';
+
+import MainLayout from './layout/Main';
+import AuthLayout from './layout/Auth';
+import OrderLayout from './layout/Order';
+import AdminLayout from './layout/Admin';
+
 import HomePage from './pages/Main/Home';
 import VitaminListPage from './pages/Main/VitaminList';
 import VitaminDetailPage from './pages/Main/VitaminDetail';
+import SignUpPage from './pages/Auth/SignUp';
+import SignInPage from './pages/Auth/SignIn';
 import CartPage from './pages/User/Cart';
 import OrdersPage from './pages/User/Orders';
 import PaymentPage from './pages/User/Payment';
@@ -17,11 +25,7 @@ import AdminOrdersPage from './pages/Admin/AdminOrders';
 import AdminProductsPage from './pages/Admin/AdminProducts';
 import AdminProductsNewPage from './pages/Admin/AdminProductsNew';
 import ErrorPage from './pages/Shared/Error';
-import MainLayout from './layout/Main';
-import OrderLayout from './layout/Order';
-import AdminLayout from './layout/Admin';
-import SignUpPage from './pages/Auth/SignUp';
-import SignInPage from './pages/Auth/SignIn';
+
 
 const router = createBrowserRouter([
   {
@@ -44,12 +48,18 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/signup',
-    element: <SignUpPage />
-  },
-  {
-    path: '/login',
-    element: <SignInPage />
+    path: 'auth',
+    element: <AuthLayout />,
+    children: [
+      {
+        path: 'signup',
+        element: <SignUpPage />,
+      },
+      {
+        path: 'login',
+        element: <SignInPage />,
+      },
+    ],
   },
   {
     path: 'orders',

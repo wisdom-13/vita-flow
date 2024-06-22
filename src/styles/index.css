@@ -59,3 +59,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  @apply max-w-[600px] my-0 mx-auto border-x border-gray-200
+}
