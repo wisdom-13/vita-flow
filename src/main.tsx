@@ -1,10 +1,10 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom/client";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
-} from "react-router-dom";
-import "./styles/index.css";
+} from 'react-router-dom';
+import './styles/index.css';
 import HomePage from './pages/Main/Home';
 import VitaminListPage from './pages/Main/VitaminList';
 import VitaminDetailPage from './pages/Main/VitaminDetail';
@@ -20,10 +20,12 @@ import ErrorPage from './pages/Shared/Error';
 import MainLayout from './layout/Main';
 import OrderLayout from './layout/Order';
 import AdminLayout from './layout/Admin';
+import SignUpPage from './pages/Auth/SignUp';
+import SignInPage from './pages/Auth/SignIn';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -32,57 +34,65 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "vitamins",
+        path: 'vitamins',
         element: <VitaminListPage />,
       },
       {
-        path: "vitamins/:id",
+        path: 'vitamins/:id',
         element: <VitaminDetailPage />,
       },
     ],
   },
   {
-    path: "orders",
+    path: '/signup',
+    element: <SignUpPage />
+  },
+  {
+    path: '/login',
+    element: <SignInPage />
+  },
+  {
+    path: 'orders',
     element: <OrderLayout />,
     children: [
       {
-        path: "cart",
+        path: 'cart',
         element: <CartPage />,
       },
       {
-        path: "history",
+        path: 'history',
         element: <OrdersPage />,
       },
       {
-        path: "payment",
+        path: 'payment',
         element: <PaymentPage />,
       },
     ],
   },
   {
-    path: "mypage",
+    path: 'mypage',
     element: <MypagePage />,
     children: [
       {
-        path: "info",
+        path: 'info',
         element: <MyinfoPage />,
       },
     ],
   },
   {
-    path: "admin",
+    path: 'admin',
     element: <AdminLayout />,
     children: [
       {
-        path: "orders",
+        path: 'orders',
         element: <AdminOrdersPage />,
       },
       {
-        path: "products",
+        path: 'products',
         element: <AdminProductsPage />,
       },
       {
-        path: "product/new",
+        path: 'product/new',
         element: <AdminProductsNewPage />,
       },
     ],
