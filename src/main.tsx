@@ -26,6 +26,8 @@ import AdminProductsPage from './pages/Admin/AdminProducts';
 import AdminProductsNewPage from './pages/Admin/AdminProductsNew';
 import ErrorPage from './pages/Shared/Error';
 import { Toaster } from './components/ui/sonner';
+import { LoadingProvider } from './context/LoadingContext';
+import LodingModal from './components/modal/LodingModal';
 
 
 const router = createBrowserRouter([
@@ -111,7 +113,10 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <Toaster position='top-center' />
+    <LoadingProvider>
+      <RouterProvider router={router} />
+      <Toaster position='top-center' />
+      <LodingModal />
+    </LoadingProvider>
   </React.StrictMode>
 );
