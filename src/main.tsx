@@ -25,6 +25,7 @@ import AdminOrdersPage from './pages/Admin/AdminOrders';
 import AdminProductsPage from './pages/Admin/AdminProducts';
 import AdminProductsNewPage from './pages/Admin/AdminProductsNew';
 import ErrorPage from './pages/Shared/Error';
+import { Toaster } from './components/ui/sonner';
 
 
 const router = createBrowserRouter([
@@ -111,5 +112,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <Toaster position='top-center' />
   </React.StrictMode>
 );
