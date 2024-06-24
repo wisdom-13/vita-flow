@@ -1,9 +1,9 @@
 import { Link, Outlet } from 'react-router-dom';
 
-const OrderLayout = () => {
+const UserLayout = () => {
   return (
     <>
-      <div>OrderLayout</div>
+      <div>userLayout</div>
       <Link to='/orders/cart'>장바구니</Link>
       <Link to='/orders/history'>주문내역</Link>
       <Link to='/orders/payment'>결제</Link>
@@ -12,4 +12,4 @@ const OrderLayout = () => {
   );
 }
 
-export default OrderLayout;
+export default UserLayout;

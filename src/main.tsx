@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import {
-  createBrowserRouter,
   RouterProvider,
+  createBrowserRouter,
 } from 'react-router-dom';
 import './styles/index.css';
 
 import MainLayout from './layout/Main';
 import AuthLayout from './layout/Auth';
-import OrderLayout from './layout/Order';
+import UserLayout from './layout/User';
 import AdminLayout from './layout/Admin';
 
 import HomePage from './pages/Main/Home';
@@ -25,9 +25,12 @@ import AdminOrdersPage from './pages/Admin/AdminOrders';
 import AdminProductsPage from './pages/Admin/AdminProducts';
 import AdminProductsNewPage from './pages/Admin/AdminProductsNew';
 import ErrorPage from './pages/Shared/Error';
-import { Toaster } from './components/ui/sonner';
+
 import { LoadingProvider } from './context/LoadingContext';
+import { AuthProvider } from './context/AuthContext';
+import { Toaster } from './components/ui/sonner';
 import LodingModal from './components/modal/LodingModal';
+import ProtectedRoute from './router/ProtectedRoute';
 
 
 const router = createBrowserRouter([
@@ -52,7 +55,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'auth',
-    element: <AuthLayout />,
+    element: (
+      <ProtectedRoute requiredRole='guest'>
+        <AuthLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: 'signup',
@@ -66,7 +73,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'orders',
-    element: <OrderLayout />,
+    element: (
+      <ProtectedRoute requiredRole='user'>
+        <UserLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: 'cart',
@@ -84,8 +95,16 @@ const router = createBrowserRouter([
   },
   {
     path: 'mypage',
-    element: <MypagePage />,
+    element: (
+      <ProtectedRoute requiredRole='user'>
+        <UserLayout />
+      </ProtectedRoute>
+    ),
     children: [
+      {
+        index: true,
+        element: <MypagePage />,
+      },
       {
         path: 'info',
         element: <MyinfoPage />,
@@ -94,7 +113,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'admin',
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute requiredRole='admin'>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: 'orders',
@@ -113,10 +136,12 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <LoadingProvider>
-      <RouterProvider router={router} />
-      <Toaster position='top-center' />
-      <LodingModal />
-    </LoadingProvider>
+    <AuthProvider>
+      <LoadingProvider>
+        <RouterProvider router={router} />
+        <Toaster position='top-center' />
+        <LodingModal />
+      </LoadingProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
