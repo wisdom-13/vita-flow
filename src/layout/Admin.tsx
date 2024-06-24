@@ -1,15 +1,51 @@
+import MenuItem from '@/components/admin/MenuItem';
 import '@/styles/admin.css'
-import { Link, Outlet } from 'react-router-dom';
+import { Home, Pill, PlusSquare, ShoppingBag } from 'lucide-react';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const AdminLayout = () => {
+  const { pathname } = useLocation();
+
   return (
-    <nav>
-      <div>AdminLayout</div>
-      <Link to='/admin/orders'>주문 관리</Link>
-      <Link to='/admin/products'>상품 관리</Link>
-      <Link to='/admin/product/new'>상품 등록</Link>
-      <Outlet />
-    </nav>
+    <div className='flex'>
+      <nav className='flex flex-col justify-between border-slate-200 bg-slate-50 p-4 pt-10 border-r w-60 h-screen'>
+        <div>
+          <h1 className='pb-10 pl-4 font-semibold text-2xl'>
+            비타플로우
+            <h6 className='mt-2 font-normal text-sm'>판매자 페이지</h6>
+          </h1>
+
+          <div className='flex flex-col gap-y-4'>
+            <MenuItem
+              icon={ShoppingBag}
+              to='/admin/orders'
+              text='주문 관리'
+              active={pathname == '/admin/orders'}
+            />
+            <MenuItem
+              icon={Pill}
+              to='/admin/products'
+              text='주문 관리'
+              active={pathname == '/admin/products'}
+            />
+            <MenuItem
+              icon={PlusSquare}
+              to='/admin/product/new'
+              text='상품 등록'
+              active={pathname == '/admin/products/new'}
+            />
+          </div>
+        </div>
+        <MenuItem
+          icon={Home}
+          to='/'
+          text='홈'
+        />
+      </nav>
+      <section className='p-10'>
+        <Outlet />
+      </section>
+    </div >
   );
 }
 
