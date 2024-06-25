@@ -10,7 +10,7 @@ import { LoadingProvider } from './context/LoadingContext';
 import { AuthProvider } from './context/AuthContext';
 
 import { Toaster } from './components/ui/sonner';
-import LodingModal from './components/modal/LodingModal';
+import LoadingModal from './components/modal/LoadingModal';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <LoadingProvider>
         <RouterProvider router={routes} />
         <Toaster position='top-center' />
-        <LodingModal />
+        <LoadingModal />
       </LoadingProvider>
     </AuthProvider>
   </React.StrictMode>

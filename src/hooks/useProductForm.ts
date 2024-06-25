@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '@/config/firebase';
 
@@ -17,7 +17,7 @@ import { useAuth } from '@/context/AuthContext';
 const formSchema = z.object({
   productName: z.string().min(2, { message: '2자 이상의 상품명을 입력해주세요.' }),
   productPrice: z.coerce.number().min(0, { message: '정확한 금액을 입력해주세요' }),
-  productQunatity: z.coerce.number().min(0, { message: '정확한 수량을 입력해주세요' }),
+  productQuantity: z.coerce.number().min(0, { message: '정확한 수량을 입력해주세요' }),
   productStatus: z.coerce.boolean(),
   productCategory: z.string(),
   productDescription: z.string().min(1, { message: '상품 설명을 작성해주세요.' }),
@@ -35,7 +35,7 @@ export const useProductForm = () => {
     defaultValues: {
       productName: '',
       productPrice: 0,
-      productQunatity: 1,
+      productQuantity: 1,
       productStatus: true,
       productDescription: '',
       productCategory: '',
@@ -57,13 +57,16 @@ export const useProductForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setLoading(true);
+
       const storageRef = ref(storage, `products/${uuid()}-${values.productImage[0].name}`);
-      const uploadTask = uploadBytesResumable(storageRef, values.productImage[0]);
-      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      await uploadBytes(storageRef, values.productImage[0]);
+      const downloadURL = await getDownloadURL(storageRef)
 
       await addDoc(collection(db, 'products'), {
         ...values,
         productImage: downloadURL,
+        productCategory: values.productCategory.split(',').map((v) => v.trim()),
         sellerId: user?.uid,
         createAt: Timestamp.now(),
         updateAt: Timestamp.now(),
