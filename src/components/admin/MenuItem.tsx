@@ -23,7 +23,6 @@ const MenuItem = ({
         active && 'bg-slate-200/70 font-semibold'
       )}>
         <Icon size='18' />
-
         {text}
       </div>
     </Link>
