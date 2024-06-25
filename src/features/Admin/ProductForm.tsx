@@ -15,8 +15,6 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
-
-
 const ProductForm = () => {
   const { form, fileRef, imagePreview, handleImageChange, onSubmit, } = useProductForm();
 
@@ -86,7 +84,7 @@ const ProductForm = () => {
             />
             <FormField
               control={form.control}
-              name='productQunatity'
+              name='productQuantity'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>재고 수량</FormLabel>
