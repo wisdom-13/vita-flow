@@ -5,6 +5,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
 
 interface ProductItemProps {
   product: Product;
@@ -58,7 +59,9 @@ const ProductItem = ({ product, isSelected, onProductSelect }: ProductItemProps)
           <b>{(productPrice).toLocaleString()}</b>원
         </TableCell>
         <TableCell className='text-right w-24'>
-          <Button variant='outline'>수정</Button>
+          <Link to={`/admin/product/${id}`}>
+            <Button variant='outline'>수정</Button>
+          </Link>
         </TableCell>
       </TableRow >
     </>
