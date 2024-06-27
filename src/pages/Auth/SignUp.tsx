@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SignUpForm from '@/features/Auth/SignUpForm';
 
-const SignUpPage: React.FC = () => {
+const SignUpPage = () => {
   return (
     <div className='flex flex-col justify-between m-auto py-16 w-4/6 h-[calc(100vh-48px)]'>
       <SignUpForm />
