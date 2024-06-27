@@ -1,5 +1,7 @@
+
+
+import useProductActions from '@/hooks/useProductActions';
 import { useProducts } from '@/hooks/useProducts';
-import ProductItem from './ProductItem';
 
 import {
   Table,
@@ -15,10 +17,26 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import useProductActions from '@/hooks/useProductActions';
+
+import ProductItem from './ProductItem';
+import { Product } from '@/types/types';
+
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
+
 
 const ProductList = () => {
-  const { products, loading, error } = useProducts();
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useProducts();
+
+  const { ref, inView } = useInView();
+
   const {
     selectedProducts,
     toggleProductSelection,
@@ -26,8 +44,13 @@ const ProductList = () => {
     updateSelectedProductsStatus,
   } = useProductActions();
 
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className='space-y-4'>
         <Skeleton className="rounded-md w-full h-14" />
@@ -37,13 +60,14 @@ const ProductList = () => {
     )
   }
 
-  if (error) {
+  if (error || !data) {
     return (
       <Table>
         <TableCaption>상품 리스트를 조회하는 중에 문제가 발생했습니다.</TableCaption>
       </Table>
     )
   }
+  const products = data.pages.flatMap((page: any) => page.products);
 
   return (
     <>
@@ -84,9 +108,10 @@ const ProductList = () => {
           )
         }
       </div>
+
       <Table>
         <TableBody>
-          {products.map(product => (
+          {products.map((product: Product) => (
             <ProductItem
               key={product.id}
               product={product}
@@ -96,6 +121,10 @@ const ProductList = () => {
           ))}
         </TableBody>
       </Table>
+      {isFetchingNextPage && (
+        <Skeleton className="rounded-md w-full h-14" />
+      )}
+      <div ref={ref}></div>
     </>
   );
 }
