@@ -13,6 +13,11 @@ const useProductActions = () => {
   }, []);
 
   const deleteSelectedProducts = useCallback(async () => {
+    if (selectedProducts.length == 0) {
+      toast.error('선택한 상품이 없습니다.');
+      return
+    }
+
     try {
       const deletePromises = selectedProducts.map(id =>
         deleteDoc(doc(db, 'products', id))
@@ -28,6 +33,11 @@ const useProductActions = () => {
 
   const updateSelectedProductsStatus = useCallback(
     async (status: boolean) => {
+      if (selectedProducts.length == 0) {
+        toast.error('선택한 상품이 없습니다.');
+        return
+      }
+
       try {
         const updatePromises = selectedProducts.map(id =>
           updateDoc(doc(db, 'products', id), { productStatus: status })
