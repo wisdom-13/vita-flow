@@ -6,12 +6,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useSignIn } from '@/hooks/useSignIn';
 
-const SignInForm: React.FC = () => {
+const SignInForm = () => {
   const { form, onSubmit } = useSignIn();
 
   return (

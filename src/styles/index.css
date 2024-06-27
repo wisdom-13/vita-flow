@@ -61,5 +61,17 @@
 }
 
 body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.main {
   @apply max-w-[600px] my-0 mx-auto border-x border-gray-200
+}
+
+.admin {
+  @apply max-w-full
 }

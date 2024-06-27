@@ -17,7 +17,8 @@ import MypagePage from '../pages/User/Mypage';
 import MyinfoPage from '../pages/User/Myinfo';
 import AdminOrdersPage from '../pages/Admin/AdminOrders';
 import AdminProductsPage from '../pages/Admin/AdminProducts';
-import AdminProductsNewPage from '../pages/Admin/AdminProductsNew';
+import AdminProductNewPage from '../pages/Admin/AdminProductNew';
+import AdminProductModifyPage from '@/pages/Admin/AdminProductModify';
 
 const routes = createBrowserRouter([
   {
@@ -114,8 +115,12 @@ const routes = createBrowserRouter([
         element: <AdminProductsPage />,
       },
       {
+        path: 'product/:id',
+        element: <AdminProductModifyPage />,
+      },
+      {
         path: 'product/new',
-        element: <AdminProductsNewPage />,
+        element: <AdminProductNewPage />,
       },
     ],
   },
