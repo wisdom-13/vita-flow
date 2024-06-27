@@ -1,7 +1,7 @@
 import SignInForm from '@/features/Auth/SignInForm';
 import { Link } from 'react-router-dom';
 
-const SignInPage: React.FC = () => {
+const SignInPage = () => {
   return (
     <div className='flex flex-col justify-between m-auto py-16 w-4/6 h-[calc(100vh-48px)]'>
       <SignInForm />
