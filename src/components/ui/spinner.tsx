@@ -28,3 +28,13 @@ export const Spinner = ({
     <Loader className={cn(spinnerVariants({ size }))} />
   )
 }
+
+export const FullScreenSpinner = () => {
+  return (
+    <div className='z-[99999] fixed inset-0 bg-white/60 m-auto'>
+      <div className='top-[50%] left-[50%] z-[99999] fixed bg-background shadow-lg p-6 border rounded-lg translate-x-[-50%] translate-y-[-50%] duration-200'>
+        <Spinner size='lg' />
+      </div>
+    </div>
+  );
+}
