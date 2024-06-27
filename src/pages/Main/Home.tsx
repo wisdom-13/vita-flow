@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 
-import { Spinner } from '@/components/Spinner';
+import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -21,7 +21,9 @@ const HomePage = () => {
               {user.nickname}님 환영합니다.
             </div>
             <Button onClick={() => signOut(auth)}>로그아웃</Button>
-            {user.isSeller && <Button>관리자</Button>}
+            {user.isSeller && (
+              <Link to='/admin/products'><Button>관리자</Button></Link>
+            )}
           </>
         ) : (
           <Button>

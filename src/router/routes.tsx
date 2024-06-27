@@ -1,24 +1,27 @@
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import MainLayout from '../layout/Main';
-import AuthLayout from '../layout/Auth';
-import UserLayout from '../layout/User';
-import AdminLayout from '../layout/Admin';
-import ErrorPage from '../pages/Shared/Error';
-import HomePage from '../pages/Main/Home';
-import VitaminListPage from '../pages/Main/VitaminList';
-import VitaminDetailPage from '../pages/Main/VitaminDetail';
-import SignUpPage from '../pages/Auth/SignUp';
-import SignInPage from '../pages/Auth/SignIn';
-import CartPage from '../pages/User/Cart';
-import OrdersPage from '../pages/User/Orders';
-import PaymentPage from '../pages/User/Payment';
-import MypagePage from '../pages/User/Mypage';
-import MyinfoPage from '../pages/User/Myinfo';
-import AdminOrdersPage from '../pages/Admin/AdminOrders';
-import AdminProductsPage from '../pages/Admin/AdminProducts';
-import AdminProductNewPage from '../pages/Admin/AdminProductNew';
-import AdminProductModifyPage from '@/pages/Admin/AdminProductModify';
+import MainLayout from '@/layout/Main';
+import AuthLayout from '@/layout/Auth';
+import UserLayout from '@/layout/User';
+import AdminLayout from '@/layout/Admin';
+import HomePage from '@/pages/Main/Home';
+import ErrorPage from '@/pages/Shared/Error';
+import VitaminListPage from '@/pages/Main/VitaminList';
+import VitaminDetailPage from '@/pages/Main/VitaminDetail';
+import SignUpPage from '@/pages/Auth/SignUp';
+import SignInPage from '@/pages/Auth/SignIn';
+import { FullScreenSpinner } from '@/components/ui/spinner';
+
+const CartPage = lazy(() => import('@/pages/User/Cart'));
+const OrdersPage = lazy(() => import('@/pages/User/Orders'));
+const PaymentPage = lazy(() => import('@/pages/User/Payment'));
+const MypagePage = lazy(() => import('@/pages/User/Mypage'));
+const MyinfoPage = lazy(() => import('@/pages/User/Myinfo'));
+const AdminOrdersPage = lazy(() => import('@/pages/Admin/AdminOrders'));
+const AdminProductsPage = lazy(() => import('@/pages/Admin/AdminProducts'));
+const AdminProductNewPage = lazy(() => import('@/pages/Admin/AdminProductNew'));
+const AdminProductModifyPage = lazy(() => import('@/pages/Admin/AdminProductModify'));
 
 const routes = createBrowserRouter([
   {
@@ -28,15 +31,21 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: (
+          <HomePage />
+        ),
       },
       {
         path: 'vitamins',
-        element: <VitaminListPage />,
+        element: (
+          <VitaminListPage />
+        ),
       },
       {
         path: 'vitamins/:id',
-        element: <VitaminDetailPage />,
+        element: (
+          <VitaminDetailPage />
+        ),
       },
     ],
   },
@@ -50,11 +59,15 @@ const routes = createBrowserRouter([
     children: [
       {
         path: 'signup',
-        element: <SignUpPage />,
+        element: (
+          <SignUpPage />
+        ),
       },
       {
         path: 'login',
-        element: <SignInPage />,
+        element: (
+          <SignInPage />
+        ),
       },
     ],
   },
@@ -68,15 +81,27 @@ const routes = createBrowserRouter([
     children: [
       {
         path: 'cart',
-        element: <CartPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <CartPage />
+          </Suspense>
+        ),
       },
       {
         path: 'history',
-        element: <OrdersPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <OrdersPage />
+          </Suspense>
+        ),
       },
       {
         path: 'payment',
-        element: <PaymentPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <PaymentPage />
+          </Suspense>
+        ),
       },
     ],
   },
@@ -90,11 +115,19 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MypagePage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <MypagePage />
+          </Suspense>
+        ),
       },
       {
         path: 'info',
-        element: <MyinfoPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <MyinfoPage />
+          </Suspense>
+        ),
       },
     ],
   },
@@ -108,19 +141,35 @@ const routes = createBrowserRouter([
     children: [
       {
         path: 'orders',
-        element: <AdminOrdersPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <AdminOrdersPage />
+          </Suspense>
+        ),
       },
       {
         path: 'products',
-        element: <AdminProductsPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <AdminProductsPage />
+          </Suspense>
+        ),
       },
       {
         path: 'product/:id',
-        element: <AdminProductModifyPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <AdminProductModifyPage />
+          </Suspense>
+        ),
       },
       {
         path: 'product/new',
-        element: <AdminProductNewPage />,
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <AdminProductNewPage />
+          </Suspense>
+        ),
       },
     ],
   },
