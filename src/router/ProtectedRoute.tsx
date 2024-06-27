@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { FullScreenSpinner } from '@/components/ui/spinner';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -11,19 +12,19 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <FullScreenSpinner />;
   }
 
   if (requiredRole === 'admin' && (!user || !user.isSeller)) {
-    return <Navigate to="/" />;
+    return <Navigate to='/' />;
   }
 
   if (requiredRole === 'user' && !user) {
-    return <Navigate to="/auth/signin" />;
+    return <Navigate to='/auth/signin' />;
   }
 
   if (requiredRole === 'guest' && user) {
-    return <Navigate to="/" />;
+    return <Navigate to='/' />;
   }
 
   return <>{children}</>;

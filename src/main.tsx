@@ -16,7 +16,7 @@ import { LoadingProvider } from './context/LoadingContext';
 import { AuthProvider } from './context/AuthContext';
 
 import { Toaster } from './components/ui/sonner';
-import LoadingModal from './components/modal/LoadingModal';
+import LoadingIndicator from './components/LoadingIndicator';
 
 const queryClient = new QueryClient()
 
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <LoadingProvider>
           <RouterProvider router={routes} />
           <Toaster position='top-center' />
-          <LoadingModal />
+          <LoadingIndicator />
         </LoadingProvider>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={true} />
