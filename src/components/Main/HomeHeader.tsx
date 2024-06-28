@@ -2,14 +2,14 @@ import { useAuth } from '@/context/AuthContext';
 import { ClipboardPen, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const HomeHeader = () => {
   const { user } = useAuth();
 
   return (
-    <div className='top-0 right-0 left-0 fixed flex justify-between items-center bg-white m-auto px-6 p-4 border-b max-w-[598px]'>
+    <div className='top-0 right-0 left-0 fixed flex justify-between items-center bg-white m-auto px-6 border-b max-w-[598px] h-[50px]'>
       <div>
         <Link to='/'>
-          <h1 className='font-Cafe24Ssurround text-2xl text-primary cursor-pointer'>비타플로우</h1>
+          <h1 className='font-Cafe24Ssurround text-primary text-xl cursor-pointer'>비타플로우</h1>
         </Link>
       </div>
       <div className='relative flex gap-x-4'>
@@ -27,4 +27,4 @@ const Header = () => {
   );
 }
 
-export default Header;
+export default HomeHeader;

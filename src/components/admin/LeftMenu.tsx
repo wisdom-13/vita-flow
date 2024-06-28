@@ -1,4 +1,4 @@
-import MenuItem from '@/components/admin/MenuItem';
+import MenuItem from './MenuItem';
 import { Home, Pill, PlusSquare, ShoppingBag } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
