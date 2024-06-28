@@ -1,6 +1,6 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchProducts } from '../services/productService';
 import { Product } from '@/types/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { fetchProducts } from '@/services/firebaseService';
 
 interface FetchProductsResponse {
   products: Product[];

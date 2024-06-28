@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
-import { db } from '@/config/firebase';
-import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { deleteProduct, updateProductStatus } from '@/services/firebaseService';
 import { toast } from 'sonner';
 
 const useProductActions = () => {
@@ -15,13 +14,11 @@ const useProductActions = () => {
   const deleteSelectedProducts = useCallback(async () => {
     if (selectedProducts.length == 0) {
       toast.error('선택한 상품이 없습니다.');
-      return
+      return;
     }
 
     try {
-      const deletePromises = selectedProducts.map(id =>
-        deleteDoc(doc(db, 'products', id))
-      );
+      const deletePromises = selectedProducts.map(id => deleteProduct(id));
       await Promise.all(deletePromises);
       toast.success('선택된 상품이 삭제되었습니다.');
       setSelectedProducts([]);
@@ -35,13 +32,11 @@ const useProductActions = () => {
     async (status: boolean) => {
       if (selectedProducts.length == 0) {
         toast.error('선택한 상품이 없습니다.');
-        return
+        return;
       }
 
       try {
-        const updatePromises = selectedProducts.map(id =>
-          updateDoc(doc(db, 'products', id), { productStatus: status })
-        );
+        const updatePromises = selectedProducts.map(id => updateProductStatus(id, status));
         await Promise.all(updatePromises);
         toast.success(
           `선택된 상품의 상태가 [${status ? '판매함' : '판매안함'}]으로 변경되었습니다.`
