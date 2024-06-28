@@ -24,7 +24,7 @@
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
-    --radius: 0.5rem;
+    --radius: 1rem;
   }
 
   .dark {
@@ -69,8 +69,30 @@ body {
 }
 
 .main {
-  @apply max-w-[600px] my-0 mx-auto border-x border-gray-200
+  @apply max-w-[600px] my-0 mx-auto relative
 }
+
+
+.main::before, .main::after {
+  width: 1px;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(138, 138, 138, 0.1);
+  content: '';
+  z-index: 99999;
+}
+
+.main::before {
+  left: 50%;
+  transform: translateX(-300px);
+}
+
+.main::after {
+  right: 50%;
+  transform: translateX(300px);
+}
+
 
 .admin {
   @apply max-w-full
