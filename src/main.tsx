@@ -16,7 +16,7 @@ import { LoadingProvider } from './context/LoadingContext';
 import { AuthProvider } from './context/AuthContext';
 
 import { Toaster } from './components/ui/sonner';
-import LoadingIndicator from './components/LoadingIndicator';
+import LoadingIndicator from './components/Shared/LoadingIndicator';
 
 const queryClient = new QueryClient()
 

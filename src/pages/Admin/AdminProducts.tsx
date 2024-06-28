@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import ProductList from '@/features/Admin/ProductList';
+import ProductList from '@/components/Admin/ProductList';
 import { Link } from 'react-router-dom';
 
 const AdminProductsPage = () => {

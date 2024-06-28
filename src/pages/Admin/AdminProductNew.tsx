@@ -1,4 +1,4 @@
-import ProductForm from '@/features/Admin/ProductForm';
+import ProductForm from '@/components/Admin/ProductForm';
 
 const AdminProductNewPage = () => {
   return (

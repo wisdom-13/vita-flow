@@ -1,4 +1,4 @@
-import SignInForm from '@/features/Auth/SignInForm';
+import SignInForm from '@/components/Auth/SignInForm';
 import { Link } from 'react-router-dom';
 
 const SignInPage = () => {
