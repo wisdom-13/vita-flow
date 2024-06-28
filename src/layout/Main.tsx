@@ -1,12 +1,16 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 const MainLayout = () => {
   return (
-    <div className='main'>
-      <div>Main Layout</div>
-      <Link to='/vitamins'>비타민 리스트</Link>
-      <Link to='/vitamins/id'>비타민 상세</Link>
-      <Outlet />
+    <div className='flex flex-col justify-between h-screen main'>
+      <Header />
+      <div className='pt-[60px] pb-20'>
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   );
 }
