@@ -8,21 +8,31 @@ import { useProducts } from '@/hooks/useProducts';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import VitaminCardItem from './VitaminCardItem';
+import { containsAllCategories } from '@/lib/utils';
 
 interface VitaminCardViewProps {
-  filters: { sortBy?: string, productsState?: boolean, categories?: string[] }
+  filters: { sortBy?: string, productsState?: boolean, categories?: string[], pageSize?: number }
 }
 
 
-const VitaminCardView = ({ filters }: VitaminCardViewProps) => {
+const VitaminCardView = ({ filters, filters: { categories } }: VitaminCardViewProps) => {
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts(filters);
   const { ref, inView } = useInView();
+  let products = data?.pages.flatMap((page: any) => page.products);
+
+  if (products && categories) {
+    products = products.filter((product: Product) =>
+      containsAllCategories(product.productCategory, categories)
+    );
+  }
 
   useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
+    if (data && data.pages) {
+      if (products && inView && hasNextPage) {
+        fetchNextPage();
+      }
     }
-  }, [inView, fetchNextPage, hasNextPage]);
+  }, [data, inView, fetchNextPage, hasNextPage]);
 
   if (isLoading) {
     return (
@@ -34,7 +44,7 @@ const VitaminCardView = ({ filters }: VitaminCardViewProps) => {
     )
   }
 
-  if (error || !data) {
+  if (error || !products) {
     return (
       <div className='flex flex-col items-center gap-y-4 mt-44'>
         <div className='mt-10 text-muted-foreground text-sm'>
@@ -46,9 +56,6 @@ const VitaminCardView = ({ filters }: VitaminCardViewProps) => {
       </div>
     )
   }
-
-  const products = data.pages.flatMap((page: any) => page.products);
-
 
   return (
     <div className='gap-4 grid grid-cols-3'>

@@ -7,7 +7,7 @@ interface FetchProductsResponse {
   nextCursor: any;
 }
 
-export const useProducts = (filters: { sortBy?: string, productsState?: boolean, categories?: string[] }) => {
+export const useProducts = (filters: { sortBy?: string, productsState?: boolean, categories?: string[], pageSize?: number }) => {
   return useInfiniteQuery<FetchProductsResponse>({
     queryKey: ['products', filters],
     queryFn: ({ pageParam }) => fetchProducts(pageParam, filters),
@@ -16,4 +16,3 @@ export const useProducts = (filters: { sortBy?: string, productsState?: boolean,
   }
   );
 };
-

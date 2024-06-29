@@ -52,13 +52,13 @@ export const fetchProduct = async (id: string) => {
   return null;
 };
 
-export const fetchProducts = async (pageParam: any, filters: { sortBy?: string, productsState?: boolean, categories?: string[] }) => {
-  console.log('데이터를 불러오는중...', filters)
-  const PAGE_SIZE = 10;
-
+export const fetchProducts = async (
+  pageParam: any,
+  filters: { sortBy?: string, productsState?: boolean, categories?: string[], pageSize?: number }
+) => {
   let productsQuery = query(
     collection(db, 'products'),
-    limit(PAGE_SIZE)
+    limit((filters.pageSize) ? filters.pageSize : 10)
   );
 
   switch (filters.sortBy) {

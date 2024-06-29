@@ -13,8 +13,7 @@ const VitaminCardItem = ({ product }: CardItemProps) => {
     productImage,
     productName,
     productPrice,
-    productCategory,
-    productStatus
+    productCategory
   } = product;
 
   return (
