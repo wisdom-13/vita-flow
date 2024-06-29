@@ -1,4 +1,7 @@
+import { Product } from '@/types/types';
+import { useEffect } from 'react';
 
+import { useInView } from 'react-intersection-observer';
 
 import useProductActions from '@/hooks/useProductActions';
 import { useProducts } from '@/hooks/useProducts';
@@ -19,11 +22,6 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import ProductItem from './ProductItem';
-import { Product } from '@/types/types';
-
-import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
-
 
 const ProductList = () => {
   const {
@@ -33,7 +31,7 @@ const ProductList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage
-  } = useProducts();
+  } = useProducts({});
 
   const { ref, inView } = useInView();
 
