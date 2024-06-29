@@ -57,6 +57,19 @@ const VitaminCardView = ({ filters, filters: { categories } }: VitaminCardViewPr
     )
   }
 
+  if (products.length == 0) {
+    return (
+      <div className='flex flex-col items-center gap-y-4 mt-44'>
+        <div className='mt-10 text-muted-foreground'>
+          조건에 맞는 비타민을 찾지 못했어요 😢
+        </div>
+        <Link to='/'>
+          <Button>메인으로</Button>
+        </Link>
+      </div>
+    )
+  }
+
   return (
     <div className='gap-4 grid grid-cols-3'>
       {products.map((product: Product) => (

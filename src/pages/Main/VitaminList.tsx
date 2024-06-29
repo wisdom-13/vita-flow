@@ -7,17 +7,20 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import VitaminCardView from '@/components/Main/VitaminCardView';
+import { useParams } from 'react-router-dom';
 
 const VitaminListPage = () => {
+  const { key } = useParams();
+
   const [sortBy, setSortBy] = useState('byDate');
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>(key ? [key] : []);
 
   const filters = { sortBy, productsState: true, categories };
 
   return (
     <>
       <div className='top-[50px] right-0 left-0 z-[9999] fixed flex justify-between items-center bg-white m-auto px-6 py-2 border-b max-w-[600px] h-[50px]'>
-        <h3 className='font-semibold cursor-default'>전체</h3>
+        <h3 className='font-semibold cursor-default'>{key ? key : '전체'}</h3>
         <div>
           <Select defaultValue={sortBy} onValueChange={(v) => setSortBy(v)}>
             <SelectTrigger className='p-0 border-none w-24 h-8'>

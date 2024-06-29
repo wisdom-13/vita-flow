@@ -21,3 +21,22 @@ export const intersectionSize = (a: string[], b: string[]) => {
 export const containsAllCategories = (productCategories: string[], filterCategories: string[]) => {
   return filterCategories.every(category => productCategories.includes(category));
 };
+
+export const pickRandomElements = (arr: any[], count: number) => {
+  if (arr.length < count) {
+    return arr;
+  }
+
+  const pickedElements: any[] = [];
+
+  while (pickedElements.length < count) {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    const randomElement = arr[randomIndex];
+
+    if (!pickedElements.includes(randomElement)) {
+      pickedElements.push(randomElement);
+    }
+  }
+
+  return pickedElements;
+}

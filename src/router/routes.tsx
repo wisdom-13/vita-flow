@@ -12,6 +12,7 @@ import VitaminDetailPage from '@/pages/Main/VitaminDetail';
 import SignUpPage from '@/pages/Auth/SignUp';
 import SignInPage from '@/pages/Auth/SignIn';
 import { FullScreenSpinner } from '@/components/ui/spinner';
+import CategoryPage from '@/pages/Main/Category';
 
 const CartPage = lazy(() => import('@/pages/User/Cart'));
 const OrdersPage = lazy(() => import('@/pages/User/Orders'));
@@ -33,6 +34,18 @@ const routes = createBrowserRouter([
         index: true,
         element: (
           <HomePage />
+        ),
+      },
+      {
+        path: 'category',
+        element: (
+          <CategoryPage />
+        ),
+      },
+      {
+        path: 'category/:key',
+        element: (
+          <VitaminListPage />
         ),
       },
       {
