@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 
 interface CardItemProps {
-  product: Product
+  product: Product;
+  variant?: 'default' | 'secondary' | 'destructive' | 'outline';
 }
 
-const VitaminCardItem = ({ product }: CardItemProps) => {
+const VitaminCardItem = ({ product, variant = 'default' }: CardItemProps) => {
   const {
     id,
     productImage,
@@ -19,8 +20,8 @@ const VitaminCardItem = ({ product }: CardItemProps) => {
   return (
     <Link to={`/vitamin/${id}`}>
       <div className='relative flex flex-col border-muted bg-gray-100 border rounded-md w-full'>
-        <div className='top-2 left-2 absolute flex gap-x-2'>
-          {productCategory.map((category, index) => <Badge key={`${index}-${category}`} variant='secondary'>{category}</Badge>)}
+        <div className='top-2 left-2 absolute flex flex-wrap gap-2'>
+          {productCategory.slice(0, 2).map((category) => <Badge key={category} variant={variant}>{category}</Badge>)}
         </div>
         <div className='bg-white rounded-md w-full h-36'>
           <img src={productImage} alt={productName} className='w-full h-full object-cover' />

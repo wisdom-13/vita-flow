@@ -17,7 +17,8 @@ const SectionCardView = ({ title, filters, filters: { categories, pageSize = 10 
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts(filters);
   let products = data?.pages.flatMap((page: any) => page.products);
 
-  if (products) {
+
+  if (products && categories) {
     products = products.filter((product: Product) =>
       categories && containsAllCategories(product.productCategory, categories) && product.id != id
     ).slice(0, pageSize);

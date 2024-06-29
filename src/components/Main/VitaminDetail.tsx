@@ -2,10 +2,10 @@ import { useProduct } from '@/hooks/useProduct';
 import { Badge } from '@/components/ui/badge';
 import SectionCardView from '@/components/Main/SectionCardView';
 
-interface VitaminDetailProp {
+interface VitaminDetailProps {
   productId: string;
 }
-const VitaminDetail = ({ productId }: VitaminDetailProp) => {
+const VitaminDetail = ({ productId }: VitaminDetailProps) => {
   const { data, isLoading, error } = useProduct(productId);
 
   if (isLoading) {

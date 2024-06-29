@@ -46,7 +46,7 @@ const ProductItem = ({ product, isSelected, onProductSelect }: ProductItemProps)
         <TableCell className='w-2/5'>
           <b>{productName}</b>
           <div className='flex gap-x-2 mt-2'>
-            {productCategory.map((category, index) => <Badge key={`${index}-${category}`} variant='secondary'>{category}</Badge>)}
+            {productCategory.map((category) => <Badge key={category} variant='secondary'>{category}</Badge>)}
           </div>
         </TableCell>
         <TableCell className='text-right w-32'>
