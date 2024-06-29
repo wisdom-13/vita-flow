@@ -9,7 +9,8 @@ export interface Product {
   id: string;
   productName: string;
   productPrice: number;
-  productQuantity: number;
+  productQuantity: number;           // 재고
+  productSales: number;              // 판매량
   productStatus: boolean;
   productCategory: Array<string>;
   productDescription: string;

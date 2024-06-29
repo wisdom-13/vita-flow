@@ -42,7 +42,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: 'vitamins/:id',
+        path: 'vitamin/:id',
         element: (
           <VitaminDetailPage />
         ),

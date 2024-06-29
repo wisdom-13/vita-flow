@@ -7,10 +7,10 @@ interface FetchProductsResponse {
   nextCursor: any;
 }
 
-export const useProducts = () => {
+export const useProducts = (filters: { sortBy?: string, productsState?: boolean, categories?: string[] }) => {
   return useInfiniteQuery<FetchProductsResponse>({
-    queryKey: ['products'],
-    queryFn: ({ pageParam }) => fetchProducts(pageParam),
+    queryKey: ['products', filters],
+    queryFn: ({ pageParam }) => fetchProducts(pageParam, filters),
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
   }
