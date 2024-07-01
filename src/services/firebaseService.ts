@@ -43,7 +43,9 @@ export const deleteProduct = async (id: string) => {
 };
 
 
-export const fetchProduct = async (id: string) => {
+export const fetchProduct = async (id?: string) => {
+  if (!id) return null;
+
   const docRef = doc(db, 'products', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
