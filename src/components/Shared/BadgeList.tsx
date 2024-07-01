@@ -8,7 +8,7 @@ interface BadgeList {
 
 const BadgeList = ({ list, variant = 'default', className }: BadgeList) => {
   return (
-    <div className={`flex flex-wrap items-center gap-x-2 ${className}`}>
+    <div className={`flex flex-wrap items-center gap-x-2 w-full h-6 overflow-hidden ${className}`}>
       {list.map((item) => <Badge key={item} variant={variant}>{item}</Badge>)}
     </div>
   )

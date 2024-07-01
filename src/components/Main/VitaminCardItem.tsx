@@ -27,7 +27,7 @@ const VitaminCardItem = ({ product, variant = 'default' }: CardItemProps) => {
         </div>
         <div className='py-2 p-4 text-sm'>
           <h3 className='font-semibold truncate'>{productName}</h3>
-          <h5>{productPrice}원</h5>
+          <h5>{productPrice.toLocaleString()}원</h5>
         </div>
       </div>
     </Link >
