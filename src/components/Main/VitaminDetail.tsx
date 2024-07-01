@@ -1,21 +1,11 @@
-import { useProduct } from '@/hooks/useProduct';
 import { Badge } from '@/components/ui/badge';
-import SectionCardView from '@/components/Main/SectionCardView';
+import CardViewSection from '@/components/Main/CardViewSection';
+import { Product } from '@/types/types';
 
 interface VitaminDetailProps {
-  productId: string;
+  product: Product;
 }
-const VitaminDetail = ({ productId }: VitaminDetailProps) => {
-  const { data, isLoading, error } = useProduct(productId);
-
-  if (isLoading) {
-    return
-  }
-
-  if (!data || error) {
-    return
-  }
-
+const VitaminDetail = ({ product }: VitaminDetailProps) => {
   const {
     productImage,
     productName,
@@ -23,7 +13,8 @@ const VitaminDetail = ({ productId }: VitaminDetailProps) => {
     productQuantity,
     productCategory,
     productDescription
-  } = data;
+  } = product;
+
 
   return (
     <>
@@ -44,9 +35,8 @@ const VitaminDetail = ({ productId }: VitaminDetailProps) => {
         </div>
         <div className='py-6 whitespace-pre-wrap'>
           {productDescription}
-          {productDescription}
         </div>
-        <SectionCardView
+        <CardViewSection
           title='이런 영양제는 어떠세요?'
           filters={{ categories: productCategory, pageSize: 3 }}
         />
