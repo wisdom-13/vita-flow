@@ -7,12 +7,12 @@ import VitaminCardItem from './VitaminCardItem';
 import { containsAllCategories } from '@/lib/utils';
 import { useParams } from 'react-router-dom';
 
-interface SectionCardViewProps {
+interface CardViewSectionProps {
   title: string;
   filters: { sortBy?: string, productsState?: boolean, categories?: string[], pageSize?: number }
 }
 
-const SectionCardView = ({ title, filters, filters: { categories, pageSize = 10 } }: SectionCardViewProps) => {
+const CardViewSection = ({ title, filters, filters: { categories, pageSize = 10 } }: CardViewSectionProps) => {
   const { id } = useParams();
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts(filters);
   let products = data?.pages.flatMap((page: any) => page.products);
@@ -54,4 +54,4 @@ const SectionCardView = ({ title, filters, filters: { categories, pageSize = 10 
   );
 }
 
-export default SectionCardView;
+export default CardViewSection;
