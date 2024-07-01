@@ -14,7 +14,7 @@ import SignInPage from '@/pages/Auth/SignIn';
 import { FullScreenSpinner } from '@/components/ui/spinner';
 import CategoryPage from '@/pages/Main/Category';
 
-const CartPage = lazy(() => import('@/pages/User/Cart'));
+const CartPage = lazy(() => import('@/pages/Main/Cart'));
 const OrdersPage = lazy(() => import('@/pages/User/Orders'));
 const PaymentPage = lazy(() => import('@/pages/User/Payment'));
 const MypagePage = lazy(() => import('@/pages/User/Mypage'));
@@ -60,6 +60,14 @@ const routes = createBrowserRouter([
           <VitaminDetailPage />
         ),
       },
+      {
+        path: 'cart',
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <CartPage />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
@@ -92,14 +100,6 @@ const routes = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      {
-        path: 'cart',
-        element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <CartPage />
-          </Suspense>
-        ),
-      },
       {
         path: 'history',
         element: (

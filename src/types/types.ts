@@ -19,3 +19,13 @@ export interface Product {
   createAt: Date;
   updateAt: Date;
 }
+
+export interface Cart {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  maxQuantity: number;
+  image: string;
+  category: string[];
+}

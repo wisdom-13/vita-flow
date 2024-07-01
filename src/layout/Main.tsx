@@ -5,6 +5,7 @@ import Navigation from '@/components/Main/Navigation';
 
 const MainLayout = () => {
   const location = useLocation();
+  let isCardPage = false;
 
   let headerText = '';
   if (location.pathname === '/') {
@@ -13,11 +14,14 @@ const MainLayout = () => {
     headerText = '비타민 모아보기';
   } else if (location.pathname.startsWith('/vitamin/')) {
     headerText = '상세보기';
+  } else if (location.pathname === '/cart') {
+    headerText = '장바구니';
+    isCardPage = true;
   }
 
   return (
     <div className='flex flex-col justify-between h-screen main'>
-      <MainHeader title={headerText} />
+      <MainHeader title={headerText} isCardPage={isCardPage} />
       <div className='pt-[50px] pb-16'>
         <Outlet />
       </div>

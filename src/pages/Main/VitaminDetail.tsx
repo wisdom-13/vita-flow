@@ -27,10 +27,7 @@ const VitaminDetailPage = () => {
       <div className='flex flex-col gap-y-6 px-6 p-6'>
         <VitaminDetail product={data} />
       </div>
-      <AddCartSection
-        productQuantity={data.productQuantity}
-        productPrice={data.productPrice}
-      />
+      <AddCartSection id={id} product={data} />
     </>
   );
 }

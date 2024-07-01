@@ -1,4 +1,5 @@
 import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
 import { ChevronLeft, ClipboardPen, ShoppingBag } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ interface MainHeaderProps {
 const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-
+  const { cart } = useCart();
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -42,12 +43,13 @@ const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
             <ClipboardPen />
           </Link>
         )}
-
         {!isCardPage && (
-          <div>
+          <Link to='/cart'>
             <ShoppingBag />
-            <span className='-right-2 -bottom-1 absolute bg-primary px-1 rounded-full min-w-4 h-4 font-semibold text-center text-white text-xs cursor-pointer'>10</span>
-          </div>
+            <span className='-right-2 -bottom-1 absolute bg-primary px-1 rounded-full min-w-4 h-4 font-semibold text-center text-white text-xs cursor-pointer'>
+              {cart.length}
+            </span>
+          </Link>
         )}
       </div>
     </div>

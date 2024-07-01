@@ -14,6 +14,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { LoadingProvider } from './context/LoadingContext';
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 
 import { Toaster } from './components/ui/sonner';
 import LoadingIndicator from './components/Shared/LoadingIndicator';
@@ -24,11 +25,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <LoadingProvider>
-          <RouterProvider router={routes} />
-          <Toaster position='top-center' />
-          <LoadingIndicator />
-        </LoadingProvider>
+        <CartProvider>
+          <LoadingProvider>
+            <RouterProvider router={routes} />
+            <Toaster position='top-center' />
+            <LoadingIndicator />
+          </LoadingProvider>
+        </CartProvider>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>

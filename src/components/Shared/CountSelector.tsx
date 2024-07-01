@@ -11,19 +11,21 @@ const CountSelector = ({ count, setCount, maxCount }: CountSelectorProps) => {
   maxCount = maxCount < 99 ? maxCount : 99;
 
   return (
-    <div className='flex items-center gap-x-4'>
+    <div className='flex items-center gap-x-4 border rounded-md'>
       <Button
         size='sm'
-        variant='outline'
+        variant='ghost'
         onClick={() => setCount((count > 1) ? count - 1 : 1)}
+        disabled={count <= 1}
       >
         <Minus size='12' />
       </Button>
-      <span className='w-8 text-center'>{count}개</span>
+      <span className='w-8 text-center text-sm cursor-default'>{count}개</span>
       <Button
         size='sm'
-        variant='outline'
+        variant='ghost'
         onClick={() => setCount((count < maxCount) ? count + 1 : maxCount)}
+        disabled={count >= maxCount}
       >
         <Plus size='12' />
       </Button>
