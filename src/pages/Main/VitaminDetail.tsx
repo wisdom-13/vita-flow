@@ -1,22 +1,36 @@
 import { useParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+
+import { useProduct } from '@/hooks/useProduct';
 import VitaminDetail from '@/components/Main/VitaminDetail';
+import AddCartSection from '@/components/Main/AddCartSection';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const VitaminDetailPage = () => {
   const { id } = useParams();
+  const { data, isLoading, error } = useProduct(id);
 
-  if (!id) {
+
+  if (isLoading || !data || error) {
+    return (
+      <>
+        <Skeleton />
+      </>
+    )
+  }
+
+  if (isLoading || !data || error) {
     return
   }
 
   return (
     <>
       <div className='flex flex-col gap-y-6 px-6 p-6'>
-        <VitaminDetail productId={id} />
+        <VitaminDetail product={data} />
       </div>
-      <div className='right-0 bottom-0 left-0 z-[9999] fixed bg-white m-auto px-6 py-4 border-t max-w-[600px]'>
-        <Button className='w-full' size='lg'>구매하기</Button>
-      </div>
+      <AddCartSection
+        productQuantity={data.productQuantity}
+        productPrice={data.productPrice}
+      />
     </>
   );
 }
