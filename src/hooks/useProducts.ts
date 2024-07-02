@@ -1,5 +1,5 @@
 import { Product } from '@/types/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchProducts } from '@/services/firebaseService';
 
 interface FetchProductsResponse {
@@ -13,6 +13,19 @@ export const useProducts = (filters: { sortBy?: string, productsState?: boolean,
     queryFn: ({ pageParam }) => fetchProducts(pageParam, filters),
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
-  }
-  );
+  });
+};
+
+export const usePrefetchProducts = (filters: { sortBy?: string, productsState?: boolean, categories?: string[], pageSize?: number }) => {
+  const queryClient = useQueryClient();
+
+  const prefetchProducts = async () => {
+    await queryClient.fetchInfiniteQuery({
+      queryKey: ['products', filters],
+      queryFn: ({ pageParam = null }) => fetchProducts(pageParam, filters),
+      initialPageParam: null,
+    })
+  };
+
+  return { prefetchProducts };
 };

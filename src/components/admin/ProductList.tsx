@@ -24,14 +24,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {
-  const {
-    data,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage
-  } = useProducts({});
+  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts({});
 
   const { ref, inView } = useInView();
 

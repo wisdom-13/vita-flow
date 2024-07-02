@@ -7,8 +7,8 @@ import { useProducts } from '@/hooks/useProducts';
 
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import CardItem from './CardItem';
 import { containsAllCategories } from '@/lib/utils';
+import CardItem from './CardItem';
 
 interface VitaminCardViewProps {
   filters: { sortBy?: string, productsState?: boolean, categories?: string[], pageSize?: number }

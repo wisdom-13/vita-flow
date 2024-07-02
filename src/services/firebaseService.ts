@@ -43,13 +43,13 @@ export const deleteProduct = async (id: string) => {
 };
 
 
-export const fetchProduct = async (id?: string) => {
+export const fetchProduct = async (id?: string): Promise<Product | null> => {
   if (!id) return null;
 
   const docRef = doc(db, 'products', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return docSnap.data();
+    return docSnap.data() as Product;
   }
   return null;
 };
