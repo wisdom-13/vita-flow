@@ -4,6 +4,8 @@ import { Cart } from '@/types/types';
 
 interface CartContextType {
   cart: Cart[];
+  isCartOpen: boolean;
+  toggleCart: () => void;
   addCart: (item: Cart) => void;
   removeCart: (id: string) => void;
   removeSelectCart: (ids: string[]) => void;
@@ -19,10 +21,15 @@ interface CartProviderProps {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<Cart[]>(() => getLocalStorage('cart') || []);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     saveLocalStorage('cart', cart);
   }, [cart]);
+
+  const toggleCart = () => {
+    setIsCartOpen(prev => !prev);
+  };
 
   const addCart = (item: Cart) => {
     setCart((prevCart) => {
@@ -62,7 +69,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addCart, removeCart, removeSelectCart, updateCartQuantity, clearCart }}>
+    <CartContext.Provider value={{ cart, isCartOpen, toggleCart, addCart, removeCart, removeSelectCart, updateCartQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

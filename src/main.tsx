@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <CartProvider>
           <LoadingProvider>
             <RouterProvider router={routes} />
-            <Toaster position='top-center' />
+            <Toaster position='bottom-center' />
             <LoadingIndicator />
           </LoadingProvider>
         </CartProvider>

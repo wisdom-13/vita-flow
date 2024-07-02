@@ -15,15 +15,21 @@ interface CartItemProps {
   cart: Cart;
   isSelected: boolean;
   onItemSelect: (id: string) => void;
+  toggleItemSelection: (id: string) => void;
 }
 
-const CartItem = ({ cart, isSelected, onItemSelect }: CartItemProps) => {
+const CartItem = ({ cart, isSelected, onItemSelect, toggleItemSelection }: CartItemProps) => {
   const { removeCart, updateCartQuantity } = useCart();
   const [quantity, setQuantity] = useState(cart.quantity);
 
   useEffect(() => {
     updateCartQuantity(cart.id, quantity);
   }, [quantity])
+
+  const handleRemove = () => {
+    removeCart(cart.id)
+    toggleItemSelection(cart.id)
+  }
 
   return (
     <div className='relative flex justify-start items-start gap-x-2 text-sm'>
@@ -57,7 +63,7 @@ const CartItem = ({ cart, isSelected, onItemSelect }: CartItemProps) => {
           title='상품 삭제'
           content='선택한 상품을 장바구니에서 삭제할까요?'
           buttonText='삭제'
-          buttonOnClick={() => removeCart(cart.id)}
+          buttonOnClick={handleRemove}
         >
           <Button size='sm' variant='ghost'>
             <X size='14' />

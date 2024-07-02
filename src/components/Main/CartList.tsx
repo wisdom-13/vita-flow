@@ -3,8 +3,9 @@ import useSelection from '@/hooks/useSelection';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import CartItem from '@/components/Main/CartItem';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import DialogConfirm from '@/components/Shared/DialogConfirm';
+import CartItem from '@/components/Main/CartItem';
 
 const CartList = () => {
   const { cart, removeSelectCart } = useCart();
@@ -23,7 +24,7 @@ const CartList = () => {
 
   return (
     <>
-      <div className='flex justify-start items-center gap-x-2 text-sm'>
+      <div className='flex justify-start items-center gap-x-2 px-6 text-sm'>
         <div className='flex justify-center items-center pt-1 w-10 text-center'>
           <Checkbox
             checked={selectedItems.length === cart.length}
@@ -43,17 +44,20 @@ const CartList = () => {
             <Button size='sm' variant='ghost'>선택삭제</Button>
           </DialogConfirm>
         </div>
-      </div >
-      <div className='flex flex-col gap-y-8'>
-        {cart.map((item) => (
-          <CartItem
-            key={item.id}
-            cart={item}
-            isSelected={selectedItems.includes(item.id)}
-            onItemSelect={toggleItemSelection}
-          />
-        ))}
       </div>
+      <ScrollArea className='px-6 h-[calc(100vh-210px)]'>
+        <div className='flex flex-col gap-y-8'>
+          {cart.map((item) => (
+            <CartItem
+              key={item.id}
+              cart={item}
+              isSelected={selectedItems.includes(item.id)}
+              onItemSelect={toggleItemSelection}
+              toggleItemSelection={toggleItemSelection}
+            />
+          ))}
+        </div>
+      </ScrollArea>
       <div className='right-0 bottom-0 left-0 z-[9999] fixed bg-white m-auto px-6 py-4 border-t max-w-[600px]'>
         <Button size='lg' className='w-full'>구매하기</Button>
       </div>

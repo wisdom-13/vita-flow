@@ -11,7 +11,7 @@ interface MainHeaderProps {
 const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { cart } = useCart();
+  const { cart, toggleCart } = useCart();
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -22,7 +22,7 @@ const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
   };
 
   return (
-    <div className='top-0 right-0 left-0 z-[9999] fixed flex justify-between items-center bg-white m-auto px-6 border-b max-w-[598px] h-[50px]'>
+    <div className='top-0 right-0 left-0 z-[9999] fixed flex justify-between items-center bg-white m-auto px-6 border-b max-w-[600px] h-[50px]'>
       {title != '' ? (
         <>
           <button onClick={handleBack}>
@@ -44,12 +44,14 @@ const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
           </Link>
         )}
         {!isCardPage && (
-          <Link to='/cart'>
+          <button onClick={toggleCart}>
             <ShoppingBag />
-            <span className='-right-2 -bottom-1 absolute bg-primary px-1 rounded-full min-w-4 h-4 font-semibold text-center text-white text-xs cursor-pointer'>
-              {cart.length}
-            </span>
-          </Link>
+            {cart.length > 0 && (
+              <span className='-right-2 -bottom-1 absolute bg-primary px-1 rounded-full min-w-4 h-4 font-semibold text-center text-white text-xs cursor-pointer'>
+                {cart.length}
+              </span>
+            )}
+          </button>
         )}
       </div>
     </div>

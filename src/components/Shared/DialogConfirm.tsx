@@ -22,7 +22,7 @@ interface DialogConfirmProps {
 const DialogConfirm = ({ children, title, content, buttonText, buttonOnClick }: DialogConfirmProps) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         {children}
       </DialogTrigger>
       <DialogContent hideCloseButton={true} className='sm:max-w-80 text-center'>

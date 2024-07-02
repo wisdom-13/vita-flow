@@ -13,7 +13,7 @@ interface AddCartSectionProps {
 }
 
 const AddCartSection = ({ id, product }: AddCartSectionProps) => {
-  const { addCart } = useCart();
+  const { addCart, toggleCart } = useCart();
 
   const [quantity, setQuantity] = useState<number>(1);
   const [isBuy, setIsBuy] = useState<boolean>(false);
@@ -37,7 +37,12 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
       quantity
     };
     addCart(item);
-    toast.success('선택한 비타민을 장바구니에 담았습니다!')
+    toast("선택한 상품을 장바구니에 담았습니다.", {
+      action: {
+        label: "보러가기",
+        onClick: toggleCart,
+      },
+    })
   };
 
   return (

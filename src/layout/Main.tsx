@@ -2,6 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import MainHeader from '@/components/Main/MainHeader';
 import Navigation from '@/components/Main/Navigation';
+import CartDrawer from '@/components/Shared/CartDrawer';
 
 const MainLayout = () => {
   const location = useLocation();
@@ -20,12 +21,13 @@ const MainLayout = () => {
   }
 
   return (
-    <div className='flex flex-col justify-between h-screen main'>
+    <div className='relative flex flex-col justify-between h-screen main'>
       <MainHeader title={headerText} isCardPage={isCardPage} />
       <div className='pt-[50px] pb-16'>
         <Outlet />
       </div>
       <Navigation />
+      <CartDrawer />
     </div>
   );
 }
