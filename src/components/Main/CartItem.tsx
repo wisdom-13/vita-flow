@@ -1,12 +1,15 @@
 import { Cart } from '@/types/types';
-import { Checkbox } from '@/components/ui/checkbox';
-import BadgeList from '@/components/Shared/BadgeList';
-import { Button } from '../ui/button';
-import { useCart } from '@/context/CartContext';
 import { useEffect, useState } from 'react';
-import CountSelector from '../Shared/CountSelector';
-import { X } from 'lucide-react';
+
 import { Link } from 'react-router-dom';
+import { X } from 'lucide-react';
+
+import { useCart } from '@/context/CartContext';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
+import BadgeList from '@/components/Shared/BadgeList';
+import CountSelector from '@/components/Shared/CountSelector';
+import DialogConfirm from '@/components/Shared/DialogConfirm';
 
 interface CartItemProps {
   cart: Cart;
@@ -50,13 +53,16 @@ const CartItem = ({ cart, isSelected, onItemSelect }: CartItemProps) => {
         </div>
       </div>
       <div className='top-0 right-0 absolute'>
-        <Button
-          size='sm'
-          variant='ghost'
-          onClick={() => removeCart(cart.id)}
+        <DialogConfirm
+          title='상품 삭제'
+          content='선택한 상품을 장바구니에서 삭제할까요?'
+          buttonText='삭제'
+          buttonOnClick={() => removeCart(cart.id)}
         >
-          <X size='14' />
-        </Button>
+          <Button size='sm' variant='ghost'>
+            <X size='14' />
+          </Button>
+        </DialogConfirm>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
+import { useCart } from '@/context/CartContext';
+import useSelection from '@/hooks/useSelection';
+
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import CartItem from '@/components/Main/CartItem';
-import { useCart } from '@/context/CartContext';
-import useSelection from '@/hooks/useSelection';
+import DialogConfirm from '@/components/Shared/DialogConfirm';
 
 const CartList = () => {
   const { cart, removeSelectCart } = useCart();
@@ -32,15 +34,16 @@ const CartList = () => {
           전체선택({selectedItems.length}/{cart.length})
         </div>
         <div className='ml-auto'>
-          <Button
-            size='sm'
-            variant='ghost'
-            onClick={handleRemoveSelected}
+          <DialogConfirm
+            title='선택 상품 삭제'
+            content={`선택한 ${selectedItems.length}개의 상품을 장바구니에서 삭제할까요?`}
+            buttonText='삭제'
+            buttonOnClick={handleRemoveSelected}
           >
-            선택삭제
-          </Button>
+            <Button size='sm' variant='ghost'>선택삭제</Button>
+          </DialogConfirm>
         </div>
-      </div>
+      </div >
       <div className='flex flex-col gap-y-8'>
         {cart.map((item) => (
           <CartItem
