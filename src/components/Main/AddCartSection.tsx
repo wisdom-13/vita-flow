@@ -54,7 +54,14 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
         <h5 className='font-semibold'>{(productPrice * quantity).toLocaleString()}원</h5>
       </div>
       <div className='right-0 bottom-0 left-0 z-[9999] fixed bg-white m-auto px-6 py-4 border-t max-w-[600px]'>
-        <Button size='lg' className='w-full' onClick={() => isBuy ? handleAddToCart() : setIsBuy(true)}>장바구니 담기</Button >
+        {isBuy ? (
+          <div className='flex gap-x-2'>
+            <Button size='lg' variant='outline' className='w-full' onClick={handleAddToCart}>장바구니 담기</Button>
+            <Button size='lg' className='w-full' onClick={handleAddToCart}>구매하기</Button>
+          </div>
+        ) : (
+          <Button size='lg' className='w-full' onClick={() => setIsBuy(true)}>구매하기</Button >
+        )}
       </div>
     </>
   );
