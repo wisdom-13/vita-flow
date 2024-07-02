@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '@/componentscontext/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { FullScreenSpinner } from '@/components/ui/spinner';
 
 interface ProtectedRouteProps {

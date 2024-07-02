@@ -7,7 +7,7 @@ import { useProducts } from '@/hooks/useProducts';
 
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import VitaminCardItem from './VitaminCardItem';
+import CardItem from './CardItem';
 import { containsAllCategories } from '@/lib/utils';
 
 interface VitaminCardViewProps {
@@ -73,7 +73,7 @@ const VitaminCardView = ({ filters, filters: { categories } }: VitaminCardViewPr
   return (
     <div className='gap-4 grid grid-cols-3'>
       {products.map((product: Product) => (
-        <VitaminCardItem
+        <CardItem
           key={product.id}
           product={product}
         />

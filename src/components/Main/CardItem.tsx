@@ -7,7 +7,7 @@ interface CardItemProps {
   variant?: 'default' | 'secondary' | 'destructive' | 'outline';
 }
 
-const VitaminCardItem = ({ product, variant = 'default' }: CardItemProps) => {
+const CardItem = ({ product, variant = 'default' }: CardItemProps) => {
   const {
     id,
     productImage,
@@ -34,4 +34,4 @@ const VitaminCardItem = ({ product, variant = 'default' }: CardItemProps) => {
   );
 }
 
-export default VitaminCardItem;
+export default CardItem;

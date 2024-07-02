@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import BadgeList from '../Shared/BadgeList';
+import BadgeList from '@/components/Shared/BadgeList';
 
 interface SymptomBannerProps {
   symptom: {

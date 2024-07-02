@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   return (
-    <div className='right-0 bottom-0 left-0 fixed flex justify-around bg-muted m-auto p-2 max-w-[598px]'>
+    <div className='right-0 bottom-0 left-0 fixed flex justify-around bg-muted m-auto p-2 max-w-[600px]'>
       <Link to='/category' className='flex flex-col items-center gap-y-1 w-full'>
         <List />
         <span className='font-semibold text-xs cursor-pointer'>카테고리</span>

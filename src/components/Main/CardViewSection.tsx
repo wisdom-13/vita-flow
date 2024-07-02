@@ -1,11 +1,11 @@
 import { Product } from '@/types/types';
 
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { containsAllCategories } from '@/lib/utils';
 import { useProducts } from '@/hooks/useProducts';
 import { Skeleton } from '@/components/ui/skeleton';
-import VitaminCardItem from './VitaminCardItem';
-import { containsAllCategories } from '@/lib/utils';
-import { useParams } from 'react-router-dom';
+import CardItem from './CardItem';
 
 interface CardViewSectionProps {
   title: string;
@@ -41,7 +41,7 @@ const CardViewSection = ({ title, filters, filters: { categories, pageSize = 10 
       <h1 className='mb-4 font-semibold text-xl'>{title}</h1>
       <div className='gap-4 grid grid-cols-3'>
         {products.map((product: Product) => (
-          <VitaminCardItem
+          <CardItem
             key={product.id}
             product={product}
           />
