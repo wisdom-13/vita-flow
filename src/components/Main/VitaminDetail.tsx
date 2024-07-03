@@ -1,6 +1,6 @@
-import { Badge } from '@/components/ui/badge';
-import CardViewSection from '@/components/Main/CardViewSection';
 import { Product } from '@/types/types';
+import CardViewSection from '@/components/Main/CardViewSection';
+import BadgeList from '@/components/Shared/BadgeList';
 
 interface VitaminDetailProps {
   product: Product;
@@ -20,17 +20,16 @@ const VitaminDetail = ({ product }: VitaminDetailProps) => {
     <>
       <div>
         <div className='flex items-center gap-x-4'>
-          <div className='border rounded-md w-36 h-36'>
+          <div className='border rounded-md w-36 h-36 overflow-hidden shrink-0'>
             <img src={productImage} alt={productName} className='w-full h-full object-cover' />
           </div>
           <div className='space-y-1 text-sm'>
             <div className='flex gap-x-2 mb-2'>
-              {productCategory.map((category: string, index: number) => <Badge key={`${index}-${category}`}>{category}</Badge>)}
+              <BadgeList list={productCategory} />
             </div>
             <h3 className='font-semibold text-2xl'>{productName}</h3>
             <h5 className='font-semibold'>{(productPrice).toLocaleString()}원</h5>
             {productQuantity <= 10 && <h5 className='font-semibold text-red-500'>남은 수량 : {productQuantity}</h5>}
-
           </div>
         </div>
         <div className='py-6 whitespace-pre-wrap'>
