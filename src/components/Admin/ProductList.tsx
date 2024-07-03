@@ -2,9 +2,11 @@ import { Product } from '@/types/types';
 import { useEffect } from 'react';
 
 import { useInView } from 'react-intersection-observer';
+import { toast } from 'sonner';
 
-import useProductActions from '@/hooks/useProductActions';
 import { useProducts } from '@/hooks/useProducts';
+import { useBatchDeleteProducts, useBatchUpdateProducts } from '@/hooks/useProduct';
+import useSelection from '@/hooks/useSelection';
 
 import {
   Table,
@@ -21,19 +23,19 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
-import ProductItem from './ProductItem';
+import ProductItem from '@/components/Admin/ProductItem';
 
 const ProductList = () => {
-  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts({});
-
   const { ref, inView } = useInView();
+  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts({});
+  const products = data?.pages.flatMap((page: any) => page.products) || [];
+  const { mutate: updateMutate } = useBatchUpdateProducts();
 
   const {
-    selectedProducts,
-    toggleProductSelection,
-    deleteSelectedProducts,
-    updateSelectedProductsStatus,
-  } = useProductActions();
+    selectedItems,
+    toggleItemSelection,
+    toggleAllItemSelection
+  } = useSelection([]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -48,17 +50,27 @@ const ProductList = () => {
         <Skeleton className="rounded-md w-full h-14" />
         <Skeleton className="rounded-md w-full h-14" />
       </div>
-    )
+    );
   }
 
-  if (error || !data) {
+  if (error) {
     return (
       <Table>
         <TableCaption>상품 리스트를 조회하는 중에 문제가 발생했습니다.</TableCaption>
       </Table>
-    )
+    );
   }
-  const products = data.pages.flatMap((page: any) => page.products);
+
+  const handleDatchUpdate = (isStatus: boolean) => {
+    updateMutate({ productIds: selectedItems, state: isStatus }, {
+      onSuccess: () => {
+        toast.success(`선택된 상품의 상태가 [${isStatus ? '판매함' : '판매안함'}]으로 변경되었습니다.`);
+      },
+      onError: () => {
+        toast.error('상품 정보를 업데이트하는 중 문제가 발생했습니다.');
+      }
+    })
+  }
 
   return (
     <>
@@ -66,35 +78,29 @@ const ProductList = () => {
         <div className='w-16 text-center'>
           <div className='w-16 text-center'>
             <Checkbox
-              checked={selectedProducts.length === products.length}
-              onCheckedChange={() =>
-                products.forEach(product =>
-                  toggleProductSelection(product.id)
-                )
-              }
+              checked={selectedItems.length === products.length}
+              onCheckedChange={toggleAllItemSelection}
             />
           </div>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='outline'>선택 판매 상태 변경</Button>
+            <Button variant='outline' disabled={selectedItems.length == 0}>선택 판매 상태 변경</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='start'>
-            <DropdownMenuItem onClick={() => updateSelectedProductsStatus(true)}>
+            <DropdownMenuItem onClick={() => handleDatchUpdate(true)}>
               판매함으로 변경
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => updateSelectedProductsStatus(false)}>
+            <DropdownMenuItem onClick={() => handleDatchUpdate(false)}>
               판매안함으로 변경
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button variant='outline' onClick={deleteSelectedProducts}>
-          선택 삭제
-        </Button>
+
         {
-          selectedProducts.length > 0 && (
+          selectedItems.length > 0 && (
             <div className='text-sm'>
-              선택된 항목 : <span className='font-semibold text-primary'>{selectedProducts.length}</span> 개
+              선택된 항목 : <span className='font-semibold text-primary'>{selectedItems.length}</span> 개
             </div>
           )
         }
@@ -106,15 +112,17 @@ const ProductList = () => {
             <ProductItem
               key={product.id}
               product={product}
-              isSelected={selectedProducts.includes(product.id)}
-              onProductSelect={toggleProductSelection}
+              isSelected={selectedItems.includes(product.id)}
+              onProductSelect={toggleItemSelection}
             />
           ))}
         </TableBody>
       </Table>
-      {isFetchingNextPage && (
-        <Skeleton className="rounded-md w-full h-14" />
-      )}
+      {
+        isFetchingNextPage && (
+          <Skeleton className="rounded-md w-full h-14" />
+        )
+      }
       <div ref={ref}></div>
     </>
   );

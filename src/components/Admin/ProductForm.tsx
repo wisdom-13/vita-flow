@@ -106,8 +106,8 @@ const ProductForm = () => {
                   <FormLabel>판매 상태</FormLabel>
                   <FormControl>
                     <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue='true'
+                      onValueChange={(value) => field.onChange(value === 'true')}
+                      value={field.value ? 'true' : 'false'}
                       className='flex space-x-4'
                     >
                       <FormItem className='flex items-center space-x-3 space-y-0'>

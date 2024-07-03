@@ -1,11 +1,14 @@
 import { Product } from '@/types/types';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
+import { useDeleteProduct } from '@/hooks/useProduct';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import BadgeList from '@/components/Shared/BadgeList';
+import DialogConfirm from '@/components/Shared/DialogConfirm';
 
 interface ProductItemProps {
   product: Product;
@@ -23,10 +26,22 @@ const ProductItem = ({ product, isSelected, onProductSelect }: ProductItemProps)
     productCategory,
     productStatus
   } = product;
+  const { mutate: deleteMutate } = useDeleteProduct();
 
   const handleCheckboxChange = (isChecked: boolean) => {
     onProductSelect(id, isChecked);
   };
+
+  const handleDelete = () => {
+    deleteMutate({ productData: product }, {
+      onSuccess: () => {
+        toast.success(`선택된 상품을 삭제하였습니다.`);
+      },
+      onError: () => {
+        toast.error('상품 정보를 업데이트하는 중 문제가 발생했습니다.');
+      }
+    })
+  }
 
   return (
     <>
@@ -56,10 +71,18 @@ const ProductItem = ({ product, isSelected, onProductSelect }: ProductItemProps)
         <TableCell className='text-right w-36'>
           <b>{(productPrice).toLocaleString()}</b>원
         </TableCell>
-        <TableCell className='text-right w-24'>
+        <TableCell className='text-right space-y-2 w-24'>
           <Link to={`/admin/product/${id}`}>
             <Button variant='outline'>수정</Button>
           </Link>
+          <DialogConfirm
+            title='삭제'
+            content={`[${productName}] 상품을 삭제하시겠습니까?<br>이 작업은 되돌릴 수 없습니다.`}
+            buttonText='삭제'
+            buttonOnClick={handleDelete}
+          >
+            <Button variant='outline'>삭제</Button>
+          </DialogConfirm>
         </TableCell>
       </TableRow >
     </>

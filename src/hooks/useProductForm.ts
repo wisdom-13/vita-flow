@@ -104,6 +104,7 @@ export const useProductForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (productData) {
+        console.log(productData.productStatus)
         form.reset({
           ...productData,
           productCategory: productData.productCategory.join(','),

@@ -1,4 +1,4 @@
-import { addProduct, fetchProduct, updateProduct } from '@/services/firebaseService';
+import { addProduct, deleteProduct, deleteProductImage, fetchProduct, updateProduct, updateProductStatus } from '@/services/firebaseService';
 import { Product } from '@/types/types';
 import { UseQueryResult, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -46,9 +46,58 @@ export const useUpdateProduct = () => {
       await updateProduct(id, productData);
       return id;
     },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product', data] });
+    }
+  });
+};
+
+
+export const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productData }: { productData: Product }) => {
+      await deleteProduct(productData.id);
+      return productData.productImage;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      deleteProductImage(data)
+    }
+  });
+};
+
+export const useBatchUpdateProducts = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productIds, state }: { productIds: string[], state: boolean }) => {
+      const promises = productIds.map((id) => updateProductStatus(id, state));
+      await Promise.all(promises);
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({ queryKey: ['product', variables.id] });
+      variables.productIds.forEach((id) => {
+        queryClient.invalidateQueries({ queryKey: ['product', id] });
+      });
+    }
+  });
+};
+
+export const useBatchDeleteProducts = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productIds }: { productIds: string[] }) => {
+      const promises = productIds.map((id) => deleteProduct(id));
+      await Promise.all(promises);
+    },
+    onSuccess: (data, variables) => {
+      console.log('[data]', data)
+      console.log('[variables]', variables)
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     }
   });
 };
