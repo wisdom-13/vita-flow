@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Cafe24Ssurround";
+  src: url('@/assets/font/Cafe24Ssurround-v2.0.woff') format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 @layer base {
   :root {
@@ -15,8 +22,8 @@
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
     --accent: 60 4.8% 95.9%;
     --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
@@ -24,7 +31,7 @@
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -38,8 +45,8 @@
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 12 6.5% 15.1%;
     --secondary-foreground: 60 9.1% 97.8%;
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
     --accent: 12 6.5% 15.1%;
     --accent-foreground: 60 9.1% 97.8%;
     --destructive: 0 72.2% 50.6%;
@@ -69,8 +76,30 @@ body {
 }
 
 .main {
-  @apply max-w-[600px] my-0 mx-auto border-x border-gray-200
+  @apply max-w-[600px] my-0 mx-auto relative
 }
+
+
+.main::before, .main::after {
+  width: 1px;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(138, 138, 138, 0.1);
+  content: '';
+  z-index: 99999;
+}
+
+.main::before {
+  left: 50%;
+  transform: translateX(-300px);
+}
+
+.main::after {
+  right: 50%;
+  transform: translateX(300px);
+}
+
 
 .admin {
   @apply max-w-full

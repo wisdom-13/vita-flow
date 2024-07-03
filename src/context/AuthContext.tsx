@@ -1,8 +1,8 @@
 import { User } from '@/types/types';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
-import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '@/config/firebase';
 
 
 interface AuthContextProps {

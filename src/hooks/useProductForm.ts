@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-
-import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { Timestamp, addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db, storage } from '@/config/firebase';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import uuid from 'react-uuid';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useLoading } from '@/context/LoadingContext';
 import { useAuth } from '@/context/AuthContext';
-
+import {
+  uploadProductImage,
+  deleteProductImage,
+  fetchProduct,
+  updateProduct,
+  addProduct
+} from '@/services/firebaseService';
 
 export const useProductForm = () => {
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ export const useProductForm = () => {
     productDescription: z.string().min(1, { message: '상품 설명을 작성해주세요.' }),
     productImage: z.any().refine((file: File[]) => file.length > 0 || id, '상품 이미지를 등록해주세요.')
   });
-
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,37 +63,27 @@ export const useProductForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-
       let downloadURL = existingImageUrl;
 
       if (values.productImage && values.productImage.length > 0) {
-        const storageRef = ref(storage, `products/${uuid()}-${values.productImage[0].name}`);
-        await uploadBytes(storageRef, values.productImage[0]);
-        downloadURL = await getDownloadURL(storageRef)
+        downloadURL = await uploadProductImage(values.productImage[0]);
 
         if (existingImageUrl) {
-          const existingImageRef = ref(storage, existingImageUrl);
-          await deleteObject(existingImageRef);
+          await deleteProductImage(existingImageUrl);
         }
       }
 
+      const productData = {
+        ...values,
+        productImage: downloadURL,
+        productCategory: values.productCategory.split(',').map((v) => v.trim()).filter((v) => v != ''),
+        sellerId: user?.uid,
+      };
+
       if (id) {
-        await updateDoc(doc(db, 'products', id), {
-          ...values,
-          productImage: downloadURL,
-          productCategory: values.productCategory.split(',').map((v) => v.trim()).filter((v) => v != ''),
-          sellerId: user?.uid,
-          updateAt: Timestamp.now(),
-        });
+        await updateProduct(id, productData);
       } else {
-        await addDoc(collection(db, 'products'), {
-          ...values,
-          productImage: downloadURL,
-          productCategory: values.productCategory.split(',').map((v) => v.trim()).filter((v) => v != ''),
-          sellerId: user?.uid,
-          createAt: Timestamp.now(),
-          updateAt: Timestamp.now(),
-        });
+        await addProduct(productData);
       }
 
       toast.success('성공적으로 상품 정보를 저장했습니다.');
@@ -103,7 +92,6 @@ export const useProductForm = () => {
     } catch (error: any) {
       toast.error('상품을 등록하는 중 오류가 발생했습니다.');
       console.log(error);
-
     } finally {
       setLoading(false);
     }
@@ -113,11 +101,8 @@ export const useProductForm = () => {
     const fetchData = async () => {
       setLoading(true);
       if (id) {
-        const docRef = doc(db, 'products', id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const productData = docSnap.data();
+        const productData = await fetchProduct(id);
+        if (productData) {
           form.reset({
             ...productData,
             productCategory: productData.productCategory.join(','),

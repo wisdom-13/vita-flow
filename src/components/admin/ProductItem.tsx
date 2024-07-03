@@ -1,11 +1,11 @@
 import { Product } from '@/types/types';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import BadgeList from '@/components/Shared/BadgeList';
 
 interface ProductItemProps {
   product: Product;
@@ -45,9 +45,7 @@ const ProductItem = ({ product, isSelected, onProductSelect }: ProductItemProps)
         </TableCell>
         <TableCell className='w-2/5'>
           <b>{productName}</b>
-          <div className='flex gap-x-2 mt-2'>
-            {productCategory.map((category, index) => <Badge key={`${index}-${category}`} variant='secondary'>{category}</Badge>)}
-          </div>
+          <BadgeList list={productCategory} className='mt-2' />
         </TableCell>
         <TableCell className='text-right w-32'>
           {productStatus ? '판매함' : '판매안함'}
