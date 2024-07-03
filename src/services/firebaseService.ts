@@ -64,9 +64,6 @@ export const fetchProducts = async (
   );
 
   switch (filters.sortBy) {
-    case 'byDate':
-      productsQuery = query(productsQuery, orderBy('createAt', 'desc'));
-      break;
     case 'byPriceLow':
       productsQuery = query(productsQuery, orderBy('productPrice', 'asc'));
       break;
@@ -77,6 +74,7 @@ export const fetchProducts = async (
       productsQuery = query(productsQuery, orderBy('productSales', 'desc'));
       break;
     default:
+      productsQuery = query(productsQuery, orderBy('createAt', 'desc'));
       break;
   }
 

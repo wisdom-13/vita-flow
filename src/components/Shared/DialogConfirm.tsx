@@ -1,3 +1,5 @@
+import { ReactNode, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -7,9 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { ReactNode } from 'react';
-
 
 interface DialogConfirmProps {
   children: ReactNode;
@@ -20,8 +19,17 @@ interface DialogConfirmProps {
 }
 
 const DialogConfirm = ({ children, title, content, buttonText, buttonOnClick }: DialogConfirmProps) => {
+  const [open, setOpen] = useState(false)
+
+  const handleClick = () => {
+    if (buttonOnClick) {
+      buttonOnClick();
+    }
+    setOpen(false);
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -29,7 +37,7 @@ const DialogConfirm = ({ children, title, content, buttonText, buttonOnClick }: 
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <p className='text-left text-sm'>{content}</p>
+        <div className='text-left text-sm whitespace-pre-line' dangerouslySetInnerHTML={{ __html: content }} />
         <DialogFooter>
           <DialogClose asChild>
             <Button
@@ -43,7 +51,7 @@ const DialogConfirm = ({ children, title, content, buttonText, buttonOnClick }: 
           <Button
             size='sm'
             className='w-full'
-            onClick={buttonOnClick}
+            onClick={handleClick}
           >
             {buttonText}
           </Button>

@@ -10,16 +10,19 @@ import { useAuth } from '@/context/AuthContext';
 import {
   uploadProductImage,
   deleteProductImage,
-  fetchProduct,
-  updateProduct,
-  addProduct
 } from '@/services/firebaseService';
+import { useProduct, useAddProduct, useUpdateProduct } from './useProduct';
+import { Product } from '@/types/types';
+
 
 export const useProductForm = () => {
   const navigate = useNavigate();
   const { setLoading } = useLoading();
   const { id } = useParams();
   const { user } = useAuth();
+  const { data: productData } = useProduct(id);
+  const { mutate: updateMutate } = useUpdateProduct();
+  const { mutate: addMutate } = useAddProduct();
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
@@ -77,13 +80,14 @@ export const useProductForm = () => {
         ...values,
         productImage: downloadURL,
         productCategory: values.productCategory.split(',').map((v) => v.trim()).filter((v) => v != ''),
+        productSales: 0,
         sellerId: user?.uid,
-      };
+      } as Product;
 
       if (id) {
-        await updateProduct(id, productData);
+        updateMutate({ id, productData })
       } else {
-        await addProduct(productData);
+        addMutate({ productData })
       }
 
       toast.success('성공적으로 상품 정보를 저장했습니다.');
@@ -99,24 +103,21 @@ export const useProductForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      if (id) {
-        const productData = await fetchProduct(id);
-        if (productData) {
-          form.reset({
-            ...productData,
-            productCategory: productData.productCategory.join(','),
-            productImage: undefined,
-          });
-          setExistingImageUrl(productData.productImage);
-          setImagePreview(productData.productImage);
-        }
+      if (productData) {
+        console.log(productData.productStatus)
+        form.reset({
+          ...productData,
+          productCategory: productData.productCategory.join(','),
+          productImage: undefined,
+        });
+        setExistingImageUrl(productData.productImage);
+        setImagePreview(productData.productImage);
       }
       setLoading(false);
     };
 
     fetchData();
-  }, [id, form]);
+  }, [productData, form]);
 
   return {
     form,
