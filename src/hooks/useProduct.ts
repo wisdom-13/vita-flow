@@ -1,6 +1,6 @@
-import { fetchProduct } from '@/services/firebaseService';
+import { addProduct, fetchProduct, updateProduct } from '@/services/firebaseService';
 import { Product } from '@/types/types';
-import { UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query';
+import { UseQueryResult, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useProduct = (id?: string): UseQueryResult<Product, Error> => {
   return useQuery({
@@ -18,9 +18,37 @@ export const usePrefetchProduct = (id?: string) => {
     await queryClient.prefetchQuery({
       queryKey: ['product', id],
       queryFn: () => fetchProduct(id!),
-      staleTime: 1000 * 60,
+      staleTime: 1000 * 60 * 5,
     });
   };
 
   return { prefetchProduct };
+};
+
+export const useAddProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ productData }: { productData: Product }) => addProduct(productData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+    }
+  });
+};
+
+export const useUpdateProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (
+      { id, productData }: { id: string, productData: Product }
+    ) => {
+      await updateProduct(id, productData);
+      return id;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product', variables.id] });
+    }
+  });
 };
