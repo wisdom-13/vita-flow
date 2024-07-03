@@ -13,7 +13,7 @@ const VitaminListPage = () => {
   const { key } = useParams();
 
   const [sortBy, setSortBy] = useState('byDate');
-  const [categories, setCategories] = useState<string[]>(key ? [key] : []);
+  const [categories, _] = useState<string[]>(key ? [key] : []);
 
   const filters = { sortBy, productsState: true, categories };
 

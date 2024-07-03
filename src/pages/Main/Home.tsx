@@ -37,7 +37,7 @@ const HomePage = () => {
         <h1 className='mb-4 font-semibold text-xl'>비타민 종류별 보기</h1>
         <div className='gap-2 grid grid-cols-5 grid-rows-2'>
           {vitaminData.slice(0, 10).map((item) => (
-            <CategoryItem key={item.key} link={`/category/${item.key}`} text={item.name.replace(/ /g, '\n')} />
+            <CategoryItem key={item.key} category={item.key} text={item.name.replace(/ /g, '\n')} />
           ))}
         </div>
       </div>
