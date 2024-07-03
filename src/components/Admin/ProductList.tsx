@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import { toast } from 'sonner';
 
 import { useProducts } from '@/hooks/useProducts';
-import { useBatchDeleteProducts, useBatchUpdateProducts } from '@/hooks/useProduct';
+import { useBatchUpdateProducts } from '@/hooks/useProduct';
 import useSelection from '@/hooks/useSelection';
 
 import {
