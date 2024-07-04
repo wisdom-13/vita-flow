@@ -1,7 +1,7 @@
 import { Cart } from '@/types/types';
 import { useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 
 import { useCart } from '@/context/CartContext';
@@ -19,8 +19,9 @@ interface CartItemProps {
 }
 
 const CartItem = ({ cart, isSelected, onItemSelect, toggleItemSelection }: CartItemProps) => {
-  const { removeCart, updateCartQuantity } = useCart();
+  const { removeCart, updateCartQuantity, toggleCart } = useCart();
   const [quantity, setQuantity] = useState(cart.quantity);
+  const navigator = useNavigate();
 
   useEffect(() => {
     updateCartQuantity(cart.id, quantity);
@@ -29,6 +30,11 @@ const CartItem = ({ cart, isSelected, onItemSelect, toggleItemSelection }: CartI
   const handleRemove = () => {
     removeCart(cart.id)
     toggleItemSelection(cart.id)
+  }
+
+  const handleLink = () => {
+    navigator(`/vitamin/${cart.id}`)
+    toggleCart()
   }
 
   return (
@@ -40,14 +46,20 @@ const CartItem = ({ cart, isSelected, onItemSelect, toggleItemSelection }: CartI
         />
       </div>
       <div className='flex flex-1 justify-start items-start gap-x-4'>
-        <Link to={`/vitamin/${cart.id}`} className='bg-muted border rounded-md w-24 h-24 overflow-hidden'>
+        <div
+          className='bg-muted border rounded-md w-24 h-24 overflow-hidden'
+          onClick={handleLink}
+        >
           <img src={cart.image} alt={cart.name} className='w-full h-full object-cover' />
-        </Link>
+        </div>
         <div className='flex flex-col flex-1 gap-y-3 pr-3'>
-          <Link to={`/vitamin/${cart.id}`} className='flex flex-col gap-y-1'>
+          <div
+            className='flex flex-col gap-y-1'
+            onClick={handleLink}
+          >
             <BadgeList list={cart.category} variant='secondary' />
             <h3 className='w-56 font-semibold truncate'>{cart.name}</h3>
-          </Link>
+          </div>
           <div className='flex justify-between items-center'>
             <CountSelector
               count={quantity}

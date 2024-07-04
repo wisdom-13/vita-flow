@@ -6,9 +6,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import DialogConfirm from '@/components/Shared/DialogConfirm';
 import CartItem from '@/components/Main/CartItem';
+import { useNavigate } from 'react-router-dom';
+import PriceSection from './PriceSection';
 
 const CartList = () => {
-  const { cart, removeSelectCart } = useCart();
+  const { cart, removeSelectCart, toggleCart, updateCartIsBuy } = useCart();
+  const navigate = useNavigate();
 
   const {
     selectedItems,
@@ -21,6 +24,15 @@ const CartList = () => {
     removeSelectCart(selectedItems);
     setSelectedItems([]);
   }
+
+  const handleBuy = () => {
+    toggleCart();
+    updateCartIsBuy(selectedItems, true);
+    navigate('/orders/payment');
+  }
+
+  const totalPrice = cart.filter((item) => selectedItems.includes(item.id)).reduce((acc, cur) => acc + cur.price, 0);
+  const deliveryPrice = (totalPrice == 0) ? 0 : (totalPrice >= 50000) ? 0 : 3000;
 
   return (
     <>
@@ -45,8 +57,8 @@ const CartList = () => {
           </DialogConfirm>
         </div>
       </div>
-      <ScrollArea className='px-6 h-[calc(100vh-210px)]'>
-        <div className='flex flex-col gap-y-8'>
+      <ScrollArea className='h-[calc(100vh-210px)]'>
+        <div className='flex flex-col gap-y-8 mb-8 px-6'>
           {cart.map((item) => (
             <CartItem
               key={item.id}
@@ -57,9 +69,10 @@ const CartList = () => {
             />
           ))}
         </div>
+        <PriceSection totalPrice={totalPrice} deliveryPrice={deliveryPrice} />
       </ScrollArea>
       <div className='right-0 bottom-0 left-0 z-[9999] fixed bg-white m-auto px-6 py-4 border-t max-w-[600px]'>
-        <Button size='lg' className='w-full'>구매하기</Button>
+        <Button size='lg' className='w-full' onClick={handleBuy} disabled={selectedItems.length == 0}>구매하기</Button>
       </div>
     </>
   );
