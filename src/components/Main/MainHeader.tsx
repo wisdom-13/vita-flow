@@ -1,14 +1,16 @@
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
-import { ChevronLeft, ClipboardPen, ShoppingBag } from 'lucide-react';
+import { ChevronLeft, ClipboardPen, LucideIcon, ShoppingBag } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 interface MainHeaderProps {
   title?: string;
   isCardPage?: boolean;
+  rightIcon?: LucideIcon;
+  handleRightIconClick?: () => void;
 }
 
-const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
+const MainHeader = ({ title, isCardPage = false, rightIcon: RightIcon, handleRightIconClick }: MainHeaderProps) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { cart, toggleCart } = useCart();
@@ -43,7 +45,7 @@ const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
             <ClipboardPen />
           </Link>
         )}
-        {!isCardPage && (
+        {!isCardPage && !RightIcon && (
           <button onClick={toggleCart}>
             <ShoppingBag />
             {cart.length > 0 && (
@@ -51,6 +53,11 @@ const MainHeader = ({ title, isCardPage = false }: MainHeaderProps) => {
                 {cart.length}
               </span>
             )}
+          </button>
+        )}
+        {RightIcon && (
+          <button onClick={handleRightIconClick}>
+            <RightIcon />
           </button>
         )}
       </div>

@@ -34,7 +34,8 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
       image: productImage,
       category: productCategory,
       maxQuantity: productQuantity,
-      quantity
+      quantity,
+      isBuy: false,
     };
     addCart(item);
     toast("선택한 상품을 장바구니에 담았습니다.", {

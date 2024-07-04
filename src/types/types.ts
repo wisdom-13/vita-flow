@@ -28,4 +28,5 @@ export interface Cart {
   maxQuantity: number;
   image: string;
   category: string[];
+  isBuy: boolean;
 }

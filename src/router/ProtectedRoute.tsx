@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   }
 
   if (requiredRole === 'user' && !user) {
-    return <Navigate to='/auth/signin' />;
+    return <Navigate to='/auth/login' />;
   }
 
   if (requiredRole === 'guest' && user) {

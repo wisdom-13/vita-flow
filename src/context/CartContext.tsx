@@ -10,6 +10,7 @@ interface CartContextType {
   removeCart: (id: string) => void;
   removeSelectCart: (ids: string[]) => void;
   updateCartQuantity: (id: string, newQuantity: number) => void;
+  updateCartIsBuy: (ids: string[], isBuy: boolean) => void;
   clearCart: () => void;
 }
 
@@ -56,6 +57,16 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     });
   };
 
+  const updateCartIsBuy = (ids: string[], isBuy: boolean) => {
+    setCart((prevCart) => {
+      return prevCart.map(cartItem =>
+        ids.includes(cartItem.id)
+          ? { ...cartItem, isBuy }
+          : { ...cartItem, isBuy: !isBuy }
+      );
+    });
+  };
+
   const removeCart = (id: string) => {
     setCart((prevCart) => prevCart.filter(item => item.id !== id));
   };
@@ -69,7 +80,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, isCartOpen, toggleCart, addCart, removeCart, removeSelectCart, updateCartQuantity, clearCart }}>
+    <CartContext.Provider value={{
+      cart,
+      isCartOpen,
+      toggleCart,
+      addCart,
+      removeCart,
+      removeSelectCart,
+      updateCartQuantity,
+      updateCartIsBuy,
+      clearCart
+    }}>
       {children}
     </CartContext.Provider>
   );

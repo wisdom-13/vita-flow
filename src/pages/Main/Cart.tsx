@@ -12,7 +12,7 @@ const CartPage = () => {
 
   return (
     <>
-      <div className='relative flex flex-col gap-y-6 px-6 p-6'>
+      <div className='relative flex flex-col gap-y-6 p-6'>
         <CartList />
       </div>
     </>
