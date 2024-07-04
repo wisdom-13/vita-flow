@@ -4,7 +4,7 @@ import { useProduct } from '@/hooks/useProduct';
 import VitaminDetail from '@/components/Main/VitaminDetail';
 import AddCartSection from '@/components/Main/AddCartSection';
 import { Skeleton } from '@/components/ui/skeleton';
-import ErrorContext from '@/components/Shared/ErrorContext';
+import MessageContent from '@/components/Shared/MessageContent';
 
 const VitaminDetailPage = () => {
   const { id } = useParams();
@@ -31,7 +31,7 @@ const VitaminDetailPage = () => {
 
   if (!id || !data || error) {
     return (
-      <ErrorContext title='비타민 정보를 찾지 못했어요 😢' />
+      <MessageContent content='비타민 정보를 찾지 못했어요 😢' />
     )
   }
 

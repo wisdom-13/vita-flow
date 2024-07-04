@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-interface ErrorContextProps {
-  title: string;
+interface MessageContentProps {
+  title?: string;
+  content?: string;
   linkText?: string;
   to?: string;
 }
 
-const ErrorContext = ({ title, linkText, to }: ErrorContextProps) => {
+const MessageContent = ({ title, content, linkText, to }: MessageContentProps) => {
   return (
     <div className='flex flex-col justify-center items-center gap-y-6 h-[calc(100vh-200px)]'>
-      <div className='text-muted-foreground'>{title}</div>
+      {title && <h1 className='font-semibold text-2xl'>{title}</h1>}
+      {content && <div className='text-muted-foreground'>{content}</div>}
       <Link to={to ? to : '/'}>
         <Button>{linkText ? linkText : '메인으로'}</Button>
       </Link >
@@ -18,4 +20,4 @@ const ErrorContext = ({ title, linkText, to }: ErrorContextProps) => {
   );
 }
 
-export default ErrorContext;
+export default MessageContent;
