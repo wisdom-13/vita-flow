@@ -16,7 +16,9 @@ import CategoryPage from '@/pages/Main/Category';
 
 const CartPage = lazy(() => import('@/pages/Main/Cart'));
 const OrdersPage = lazy(() => import('@/pages/User/Orders'));
-const PaymentPage = lazy(() => import('@/pages/User/Payment'));
+const PaymentPage = lazy(() => import('@/pages/Orders/Payment'));
+const PaymentSuccessPage = lazy(() => import('@/pages/Orders/PaymentSuccess'));
+const PaymentFailPage = lazy(() => import('@/pages/Orders/PaymentFail'));
 const MypagePage = lazy(() => import('@/pages/User/Mypage'));
 const MyinfoPage = lazy(() => import('@/pages/User/Myinfo'));
 const AdminOrdersPage = lazy(() => import('@/pages/Admin/AdminOrders'));
@@ -101,18 +103,26 @@ const routes = createBrowserRouter([
     ),
     children: [
       {
-        path: 'history',
-        element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <OrdersPage />
-          </Suspense>
-        ),
-      },
-      {
         path: 'payment',
         element: (
           <Suspense fallback={<FullScreenSpinner />}>
             <PaymentPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'success',
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <PaymentSuccessPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'fail',
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <PaymentFailPage />
           </Suspense>
         ),
       },
@@ -139,6 +149,14 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<FullScreenSpinner />}>
             <MyinfoPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'history',
+        element: (
+          <Suspense fallback={<FullScreenSpinner />}>
+            <OrdersPage />
           </Suspense>
         ),
       },
