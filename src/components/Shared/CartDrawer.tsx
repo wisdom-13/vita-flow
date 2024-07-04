@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/drawer';
 import CartList from '@/components/Main/CartList';
 import MessageContent from '@/components/Shared/MessageContent';
+import { DialogDescription } from '../ui/dialog';
 
 const CartDrawer = () => {
   const { isCartOpen, toggleCart, cart } = useCart();
@@ -22,13 +23,14 @@ const CartDrawer = () => {
     <>
       <Drawer open={isCartOpen}>
         <DrawerContent isShowBar={false} className='m-auto w-[600px] h-screen'>
-          <DrawerHeader className='flex justify-between items-center px-6 py-2 border-b h-[50px]'>
+          <DrawerHeader id='cart-header' className='flex justify-between items-center px-6 py-2 border-b h-[50px]'>
             <button onClick={toggleCart}>
               <X />
             </button>
             <DrawerTitle className='font-semibold font-xl cursor-default'>장바구니</DrawerTitle>
             <div className='w-6'></div>
           </DrawerHeader>
+          <DialogDescription />
           <div className='flex flex-col gap-y-4 py-2'>
             <CartList />
           </div>

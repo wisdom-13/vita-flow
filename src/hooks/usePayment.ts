@@ -1,5 +1,6 @@
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import uuid from 'react-uuid';
+import { toast } from 'sonner';
 
 interface paymentProps {
   amount: number;
@@ -26,11 +27,9 @@ export const usePayment = ({ amount, orderName, customerName }: paymentProps) =>
       })
         .catch(function (error) {
           if (error.code === 'USER_CANCEL') {
-            // 결제 고객이 결제창을 닫았을 때 에러 처리
-            console.log(error)
+            toast.error('결제를 취소했습니다.')
           } else if (error.code === 'INVALID_CARD_COMPANY') {
-            // 유효하지 않은 카드 코드에 대한 에러 처리
-            console.log(error)
+            toast.error('잘못된 정보입니다.')
           }
         })
     })

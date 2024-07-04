@@ -45,7 +45,7 @@ const CartItem = ({ cart, isSelected, onItemSelect, toggleItemSelection }: CartI
           onClick={() => onItemSelect(cart.id)}
         />
       </div>
-      <div className='flex flex-1 justify-start items-start gap-x-4'>
+      <div className='flex flex-1 justify-start items-center gap-x-4'>
         <div
           className='bg-muted border rounded-md w-24 h-24 overflow-hidden'
           onClick={handleLink}
@@ -57,7 +57,7 @@ const CartItem = ({ cart, isSelected, onItemSelect, toggleItemSelection }: CartI
             className='flex flex-col gap-y-1'
             onClick={handleLink}
           >
-            <BadgeList list={cart.category} variant='secondary' />
+            {/* <BadgeList list={cart.category} variant='secondary' /> */}
             <h3 className='w-56 font-semibold truncate'>{cart.name}</h3>
           </div>
           <div className='flex justify-between items-center'>
