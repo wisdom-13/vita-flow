@@ -22,11 +22,10 @@ export interface Product {
 
 export interface Cart {
   id: string;
+  userId?: string;
   name: string;
   price: number;
   quantity: number;
-  maxQuantity: number;
   image: string;
-  category: string[];
   isBuy: boolean;
 }

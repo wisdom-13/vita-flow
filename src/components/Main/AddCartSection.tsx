@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import CountSelector from '@/components/Shared/CountSelector';
+import { useAuth } from '@/context/AuthContext';
 
 interface AddCartSectionProps {
   id: string;
@@ -13,6 +14,7 @@ interface AddCartSectionProps {
 }
 
 const AddCartSection = ({ id, product }: AddCartSectionProps) => {
+  const { user } = useAuth();
   const { addCart, toggleCart } = useCart();
 
   const [quantity, setQuantity] = useState<number>(1);
@@ -23,17 +25,15 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
     productPrice,
     productQuantity,
     productImage,
-    productCategory,
   } = product;
 
   const handleAddToCart = () => {
     const item = {
       id,
+      userId: user?.uid,
       name: productName,
       price: productPrice,
       image: productImage,
-      category: productCategory,
-      maxQuantity: productQuantity,
       quantity,
       isBuy: false,
     };
@@ -66,7 +66,14 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
             <Button size='lg' className='w-full' onClick={handleAddToCart}>구매하기</Button>
           </div>
         ) : (
-          <Button size='lg' className='w-full' onClick={() => setIsBuy(true)}>구매하기</Button >
+          <Button
+            size='lg'
+            className='w-full'
+            onClick={() => setIsBuy(true)}
+            disabled={productQuantity === 0}
+          >
+            구매하기
+          </Button>
         )}
       </div>
     </>

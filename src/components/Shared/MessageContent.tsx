@@ -6,16 +6,17 @@ interface MessageContentProps {
   content?: string;
   linkText?: string;
   to?: string;
+  onClick?: () => void;
 }
 
-const MessageContent = ({ title, content, linkText, to }: MessageContentProps) => {
+const MessageContent = ({ title, content, linkText, to, onClick }: MessageContentProps) => {
   return (
     <div className='flex flex-col justify-center items-center gap-y-6 h-[calc(100vh-200px)]'>
       {title && <h1 className='font-semibold text-2xl'>{title}</h1>}
       {content && <div className='text-muted-foreground'>{content}</div>}
-      <Link to={to ? to : '/'}>
+      <Link to={to ? to : '/'} onClick={onClick}>
         <Button>{linkText ? linkText : '메인으로'}</Button>
-      </Link >
+      </Link>
     </div>
   );
 }

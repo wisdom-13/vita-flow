@@ -8,17 +8,38 @@ import DialogConfirm from '@/components/Shared/DialogConfirm';
 import CartItem from '@/components/Main/CartItem';
 import { useNavigate } from 'react-router-dom';
 import PriceSection from './PriceSection';
+import { useCartProducts } from '@/hooks/useProducts';
+import MessageContent from '../Shared/MessageContent';
+import { useEffect, useState } from 'react';
+import { Cart, Product } from '@/types/types';
 
 const CartList = () => {
   const { cart, removeSelectCart, toggleCart, updateCartIsBuy } = useCart();
+  const { cartProducts, isError } = useCartProducts(cart);
+  const [validProducts, setValidProducts] = useState<(Cart & Product)[]>([]);
+
+  useEffect(() => {
+    setValidProducts(cartProducts.filter((item) => item.productQuantity !== 0));
+    setSelectedItems(validProducts.map((item) => item.id))
+  }, [cartProducts])
+
   const navigate = useNavigate();
+
+  if (!cartProducts || isError) {
+    return (<MessageContent
+      content='장바구니에 담긴 비타민을 불러오는 중 문제가 발생했어요 😢'
+      linkText='메인으로'
+      to='/vitamins'
+      onClick={toggleCart}
+    />)
+  }
 
   const {
     selectedItems,
     setSelectedItems,
     toggleItemSelection,
     toggleAllItemSelection
-  } = useSelection(cart);
+  } = useSelection(validProducts);
 
   const handleRemoveSelected = () => {
     removeSelectCart(selectedItems);
@@ -31,7 +52,7 @@ const CartList = () => {
     navigate('/orders/payment');
   }
 
-  const totalPrice = cart.filter((item) => selectedItems.includes(item.id)).reduce((acc, cur) => acc + cur.price, 0);
+  const totalPrice = cartProducts.filter((item) => selectedItems.includes(item.id)).reduce((acc, cur) => acc + (cur.price * cur.quantity), 0);
   const deliveryPrice = (totalPrice == 0) ? 0 : (totalPrice >= 50000) ? 0 : 3000;
 
   return (
@@ -39,12 +60,12 @@ const CartList = () => {
       <div className='flex justify-start items-center gap-x-2 px-6 text-sm'>
         <div className='flex justify-center items-center pt-1 w-10 text-center'>
           <Checkbox
-            checked={selectedItems.length === cart.length}
+            checked={selectedItems.length === validProducts.length}
             onClick={toggleAllItemSelection}
           />
         </div>
         <div>
-          전체선택({selectedItems.length}/{cart.length})
+          전체선택({selectedItems.length}/{validProducts.length})
         </div>
         <div className='ml-auto'>
           <DialogConfirm
@@ -59,10 +80,10 @@ const CartList = () => {
       </div>
       <ScrollArea className='h-[calc(100vh-210px)]'>
         <div className='flex flex-col gap-y-8 mb-8 px-6'>
-          {cart.map((item) => (
+          {cartProducts.map((item) => (
             <CartItem
               key={item.id}
-              cart={item}
+              cartProduct={item}
               isSelected={selectedItems.includes(item.id)}
               onItemSelect={toggleItemSelection}
               toggleItemSelection={toggleItemSelection}

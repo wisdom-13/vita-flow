@@ -15,9 +15,6 @@ const CartDrawer = () => {
 
   if (!isCartOpen) return
 
-  if (cart.length === 0) {
-    return <MessageContent content='장바구니에 담긴 비타민이 없어요 💊' linkText='비타민 둘러보기' to='/vitamins' />
-  }
 
   return (
     <>
@@ -32,7 +29,16 @@ const CartDrawer = () => {
           </DrawerHeader>
           <DialogDescription />
           <div className='flex flex-col gap-y-4 py-2'>
-            <CartList />
+            {cart.length === 0 ? (
+              <MessageContent
+                content='장바구니에 담긴 비타민이 없어요 💊'
+                linkText='비타민 둘러보기'
+                to='/vitamins'
+                onClick={toggleCart}
+              />
+            ) : (
+              <CartList />
+            )}
           </div>
         </DrawerContent>
       </Drawer>

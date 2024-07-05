@@ -29,7 +29,7 @@ const VitaminDetailPage = () => {
     )
   }
 
-  if (!id || !data || error) {
+  if (!id || !data || error || data.productStatus == false) {
     return (
       <MessageContent content='비타민 정보를 찾지 못했어요 😢' />
     )

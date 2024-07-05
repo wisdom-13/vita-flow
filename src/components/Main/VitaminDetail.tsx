@@ -15,7 +15,6 @@ const VitaminDetail = ({ product }: VitaminDetailProps) => {
     productDescription
   } = product;
 
-
   return (
     <>
       <div>
@@ -29,7 +28,8 @@ const VitaminDetail = ({ product }: VitaminDetailProps) => {
             </div>
             <h3 className='font-semibold text-2xl'>{productName}</h3>
             <h5 className='font-semibold'>{(productPrice).toLocaleString()}원</h5>
-            {productQuantity <= 10 && <h5 className='font-semibold text-red-500'>남은 수량 : {productQuantity}</h5>}
+            {productQuantity <= 10 && productQuantity !== 0 && <h5 className='font-semibold text-red-500'>남은 수량 : {productQuantity}</h5>}
+            {productQuantity === 0 && <h5 className='font-semibold text-red-500'>품절된 상품입니다.</h5>}
           </div>
         </div>
         <div className='py-6 whitespace-pre-wrap'>
