@@ -17,13 +17,19 @@ const CartList = () => {
   const { cart, removeSelectCart, toggleCart, updateCartIsBuy } = useCart();
   const { cartProducts, isError } = useCartProducts(cart);
   const [validProducts, setValidProducts] = useState<(Cart & Product)[]>([]);
-
-  useEffect(() => {
-    setValidProducts(cartProducts.filter((item) => item.productQuantity !== 0));
-    setSelectedItems(validProducts.map((item) => item.id))
-  }, [cartProducts])
+  const { selectedItems, setSelectedItems, toggleItemSelection, toggleAllItemSelection } = useSelection(validProducts);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const validItems = cartProducts.filter((item) => item.productQuantity !== 0);
+    setValidProducts(validItems);
+  }, [cartProducts.length]);
+
+  useEffect(() => {
+    setSelectedItems(validProducts.map((item) => item.id));
+  }, [validProducts.length]);
+
 
   if (!cartProducts || isError) {
     return (<MessageContent
@@ -33,13 +39,6 @@ const CartList = () => {
       onClick={toggleCart}
     />)
   }
-
-  const {
-    selectedItems,
-    setSelectedItems,
-    toggleItemSelection,
-    toggleAllItemSelection
-  } = useSelection(validProducts);
 
   const handleRemoveSelected = () => {
     removeSelectCart(selectedItems);
