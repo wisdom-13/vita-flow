@@ -1,4 +1,4 @@
-import { saveOrder, updateProductQuantity } from '@/services/firebaseService';
+import { updateProductQuantity } from '@/services/firebaseService';
 import { Cart, Product } from '@/types/types';
 import { useMutation } from '@tanstack/react-query';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
@@ -14,7 +14,7 @@ export const usePayment = (customerName: string) => {
       return 1
     },
     onError: () => {
-      // todo: updateProductQuantity 에서 수량 0일 경우 오류 던지고 여기서 처리
+      // todo: updateProductQuantity -> 수량 0일 경우 오류 처리
       toast.error('결제 정보를 처리하는 중 문제가 발생했습니다.');
     },
     onSuccess: (_, variables) => {
