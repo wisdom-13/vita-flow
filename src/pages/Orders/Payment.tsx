@@ -1,19 +1,21 @@
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import Payment from '@/components/Order/Payment';
+import MessageContent from '@/components/Shared/MessageContent';
 
 const PaymentPage = () => {
   const { cart } = useCart();
   const { user } = useAuth();
 
-  if (!user?.nickname) {
-    return
+  const buyCart = cart.filter((item) => item.isBuy);
+
+  if (!user?.nickname || buyCart.length == 0) {
+    return <MessageContent content='주문 정보가 없습니다.' />
   }
-  const byProduct = cart.filter((item) => item.isBuy);
 
   return (
     <>
-      <Payment user={user} byProduct={byProduct} />
+      <Payment user={user} buyCart={buyCart} />
     </>
   );
 }

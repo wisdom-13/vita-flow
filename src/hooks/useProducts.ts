@@ -1,7 +1,6 @@
 import { Cart, Product } from '@/types/types';
 import { useInfiniteQuery, useQueries, useQueryClient } from '@tanstack/react-query';
 import { fetchProduct, fetchProducts } from '@/services/firebaseService';
-import { useEffect, useState } from 'react';
 
 interface FetchProductsResponse {
   products: Product[];
@@ -36,28 +35,21 @@ export const useCartProducts = (cartItems: Cart[]) => {
     queries: cartItems.map(item => ({
       queryKey: ['product', item.id],
       queryFn: () => fetchProduct(item.id),
+      staleTime: 1000 * 60 * 5,
     })),
   });
 
-  const [cartProducts, setCartProducts] = useState<(Cart & Product)[]>([]);
-
-  useEffect(() => {
-    if (productQueries.every(query => query.isSuccess || query.isError)) {
-      const products = productQueries.map(query => query.data);
-      const combined = cartItems.reduce((acc, cartItem, index) => {
-        const product = products[index];
-        if (product) {
-          acc.push({ ...cartItem, ...product });
-        }
-        return acc;
-      }, [] as (Cart & Product)[]);
-      setCartProducts(combined);
+  const combinedCartProducts = productQueries.map((query, index) => {
+    const product = query.data;
+    if (product && product.productStatus === true) {
+      return { ...cartItems[index], ...product };
     }
-  }, [productQueries, cartItems]);
+    return null;
+  }).filter(Boolean) as (Cart & Product)[];
 
   return {
-    cartProducts,
+    cartProducts: combinedCartProducts,
     isLoading: productQueries.some(query => query.isLoading),
     isError: productQueries.some(query => query.isError),
   };
-};
+}
