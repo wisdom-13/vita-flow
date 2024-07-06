@@ -1,7 +1,7 @@
-import { Product } from '@/types/types';
+import { Order, OrderStatus, Product } from '@/types/types';
 
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { Timestamp, addDoc, collection, doc, getDoc, updateDoc, deleteDoc, query, orderBy, limit, startAfter, getDocs, where } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, doc, getDoc, updateDoc, deleteDoc, query, orderBy, limit, startAfter, getDocs, where, setDoc } from 'firebase/firestore';
 import { db, storage } from '@/config/firebase';
 import uuid from 'react-uuid';
 
@@ -35,6 +35,21 @@ export const updateProduct = async (id: string, productData: any) => {
 
 export const updateProductStatus = async (id: string, status: boolean) => {
   await updateDoc(doc(db, 'products', id), { productStatus: status });
+};
+
+export const updateProductQuantity = async (id: string, quantity: number) => {
+  const productRef = doc(db, 'products', id);
+  const productSnap = await getDoc(productRef);
+
+  if (!productSnap.exists()) {
+    throw new Error('Product does not exist');
+  }
+
+  const current = productSnap.data();
+  const newQuantity = current.productQuantity - quantity;   // 재고
+  const newSales = current.productSales + quantity;         // 판매량
+
+  await updateDoc(productRef, { productQuantity: newQuantity, productSales: newSales });
 };
 
 
@@ -91,17 +106,53 @@ export const fetchProducts = async (
   }
 
 
-  const querySnapshot = await getDocs(productsQuery);
+  const querySnap = await getDocs(productsQuery);
 
-  const productsList: Product[] = querySnapshot.docs.map(doc => ({
+  const productsList: Product[] = querySnap.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
   }) as Product);
 
-  const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+  const lastVisible = querySnap.docs[querySnap.docs.length - 1];
 
   return {
     products: productsList,
     nextCursor: lastVisible,
   };
+};
+
+export const saveOrder = async (order: Order) => {
+  const orderRef = doc(db, 'orders', order.orderId);
+  const orderDoc = await getDoc(orderRef);
+
+  if (orderDoc.exists()) {
+    throw new Error(`Order with ID ${order.orderId} already exists.`);
+  }
+
+  await setDoc(orderRef, order);
+};
+
+export const fetchOrders = async (userId?: string) => {
+
+  let ordersQuery = query(collection(db, 'orders'))
+
+  if (userId) {
+    ordersQuery = query(ordersQuery, where('userId', '==', userId));
+  }
+
+  const querySnap = await getDocs(ordersQuery);
+
+  const orderList = querySnap.docs.map(doc => ({
+    ...doc.data()
+  }) as Order);
+
+  return orderList;
+};
+
+
+export const updateStatusOrder = async (orderId: string, status: OrderStatus) => {
+  await updateDoc(doc(db, 'orders', orderId), {
+    status: status,
+    cancelAt: Timestamp.now(),
+  });
 };

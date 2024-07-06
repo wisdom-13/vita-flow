@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -37,7 +38,7 @@ const DialogConfirm = ({ children, title, content, buttonText, buttonOnClick }: 
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className='text-left text-sm whitespace-pre-line' dangerouslySetInnerHTML={{ __html: content }} />
+        <DialogDescription className='text-left text-sm whitespace-pre-line' dangerouslySetInnerHTML={{ __html: content }} />
         <DialogFooter>
           <DialogClose asChild>
             <Button
