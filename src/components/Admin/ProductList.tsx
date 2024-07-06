@@ -11,7 +11,10 @@ import useSelection from '@/hooks/useSelection';
 import {
   Table,
   TableBody,
-  TableCaption
+  TableCaption,
+  TableCell,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table';
 import {
   DropdownMenu,
@@ -74,39 +77,39 @@ const ProductList = () => {
 
   return (
     <>
-      <div className='flex items-center gap-4 mb-4 px-4'>
-        <div className='w-16 text-center'>
-          <div className='w-16 text-center'>
-            <Checkbox
-              checked={selectedItems.length === products.length}
-              onCheckedChange={toggleAllItemSelection}
-            />
-          </div>
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='outline' disabled={selectedItems.length == 0}>선택 판매 상태 변경</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='start'>
-            <DropdownMenuItem onClick={() => handleDatchUpdate(true)}>
-              판매함으로 변경
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDatchUpdate(false)}>
-              판매안함으로 변경
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {
-          selectedItems.length > 0 && (
-            <div className='text-sm'>
-              선택된 항목 : <span className='font-semibold text-primary'>{selectedItems.length}</span> 개
-            </div>
-          )
-        }
-      </div>
-
       <Table>
+        <TableHeader>
+          <TableRow className='hover:bg-white'>
+            <TableCell className='w-16 text-center'>
+              <Checkbox
+                checked={selectedItems.length === products?.length}
+                onCheckedChange={toggleAllItemSelection}
+              />
+            </TableCell>
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant='outline' disabled={selectedItems.length == 0}>선택 판매 상태 변경</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='start'>
+                  <DropdownMenuItem onClick={() => handleDatchUpdate(true)}>
+                    판매함으로 변경
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDatchUpdate(false)}>
+                    판매안함으로 변경
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
+            <TableCell colSpan={3}>
+              {selectedItems.length > 0 && (
+                <div className='text-sm'>
+                  선택된 항목 : <span className='font-semibold text-primary'>{selectedItems.length}</span> 개
+                </div>
+              )}
+            </TableCell>
+          </TableRow>
+        </TableHeader>
         <TableBody>
           {products.map((product: Product) => (
             <ProductItem

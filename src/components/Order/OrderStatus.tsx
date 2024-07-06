@@ -8,11 +8,13 @@ interface OrderStatusProps {
 const OrderStatus: React.FC<OrderStatusProps> = ({ orders }) => {
   const { statuses, statusCount } = useOrderStatus(orders);
 
+  if (!statusCount) return
+
   return (
     <div className='flex justify-around items-center my-4'>
       {statuses.map((status) => (
         <div key={status} className='flex flex-col items-center'>
-          <div className='p-3 text-3xl'>{statusCount[status]}</div>
+          <div className='p-3 text-3xl'>{statusCount[status as keyof typeof statusCount]}</div>
           <span className='text-muted-foreground'>{status}</span>
         </div>
       ))}

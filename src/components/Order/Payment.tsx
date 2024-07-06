@@ -1,10 +1,10 @@
-import PriceSection from '@/components/Main/PriceSection';
-import OrderItem from '@/components/Order/OrderItem';
-import { Button } from '@/components/ui/button';
+import { Cart, User } from '@/types/types';
 import { usePayment } from '@/hooks/usePayment';
 import { useCartProducts } from '@/hooks/useProducts';
-import { Cart, User } from '@/types/types';
-import MessageContent from '../Shared/MessageContent';
+import { Button } from '@/components/ui/button';
+import MessageContent from '@/components/Shared/MessageContent';
+import PriceSection from '@/components/Main/PriceSection';
+import OrderProductItem from '@/components/Order/OrderProductItem';
 
 interface Payment {
   user: User;
@@ -31,7 +31,7 @@ const Payment = ({ user, buyCart }: Payment) => {
           <h3 className='mb-3 font-semibold text-xl'>주문상품 <span className='text-primary'>{cartProducts.length}</span></h3>
           <div className='flex flex-col gap-y-8'>
             {cartProducts.map((item) => (
-              <OrderItem key={item.id} product={item} />
+              <OrderProductItem key={item.id} product={item} />
             ))}
           </div>
         </div>

@@ -8,7 +8,6 @@ export const useOrders = (userId?: string) => {
   return useQuery({
     queryKey: ['orders', userId],
     queryFn: () => fetchOrders(userId),
-    enabled: !!userId,
     staleTime: 1000 * 60,
   });
 };

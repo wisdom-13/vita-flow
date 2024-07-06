@@ -22,7 +22,7 @@ const LeftMenu = () => {
           <MenuItem
             icon={Pill}
             to='/admin/products'
-            text='주문 관리'
+            text='상품 관리'
             active={pathname == '/admin/products'}
           />
           <MenuItem
