@@ -15,7 +15,7 @@ import { FullScreenSpinner } from '@/components/ui/spinner';
 import CategoryPage from '@/pages/Main/Category';
 
 const CartPage = lazy(() => import('@/pages/Main/Cart'));
-const OrdersPage = lazy(() => import('@/pages/User/Orders'));
+const HistoryPage = lazy(() => import('@/pages/User/History'));
 const PaymentPage = lazy(() => import('@/pages/Orders/Payment'));
 const PaymentSuccessPage = lazy(() => import('@/pages/Orders/PaymentSuccess'));
 const PaymentFailPage = lazy(() => import('@/pages/Orders/PaymentFail'));
@@ -156,7 +156,7 @@ const routes = createBrowserRouter([
         path: 'history',
         element: (
           <Suspense fallback={<FullScreenSpinner />}>
-            <OrdersPage />
+            <HistoryPage />
           </Suspense>
         ),
       },

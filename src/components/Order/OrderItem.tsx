@@ -1,16 +1,12 @@
-import { Cart } from '@/types/types';
+import { Cart, OrderItem as OrderItemType } from '@/types/types';
 
-import { Link, useNavigate } from 'react-router-dom';
-import BadgeList from '@/components/Shared/BadgeList';
+import { Link } from 'react-router-dom';
 
 interface OrderItemProps {
-  product: Cart;
+  product: Cart | OrderItemType;
 }
 
 const OrderItem = ({ product }: OrderItemProps) => {
-  const navigator = useNavigate();
-
-
   return (
     <div className='relative flex justify-start items-start gap-x-2 text-sm'>
       <div className='flex flex-1 justify-start items-center gap-x-4'>

@@ -12,6 +12,12 @@ const UserLayout = () => {
   let headerText = '';
   if (location.pathname === '/orders/payment') {
     headerText = '주문하기';
+  } else if (location.pathname === '/mypage') {
+    headerText = '마이페이지';
+  } else if (location.pathname === '/mypage/history') {
+    headerText = '주문/배송 내역';
+  } else if (location.pathname === '/mypage/info') {
+    headerText = '내정보';
   }
 
   const handleRightIconClick = () => {

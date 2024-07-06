@@ -1,9 +1,18 @@
 import { type ClassValue, clsx } from "clsx"
+import { Timestamp } from 'firebase/firestore';
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export const formatDate = (timestamp: Timestamp) => {
+  const date = timestamp.toDate();
+  const year = String(date.getFullYear()).slice(2); // 두 자리 연도
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 두 자리 월
+  const day = String(date.getDate()).padStart(2, '0'); // 두 자리 일
+  return `${year}.${month}.${day}`;
+};
 
 export const arraysEqual = (a: string[], b: string[]) => {
   if (a.length !== b.length) return false;
