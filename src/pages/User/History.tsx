@@ -2,8 +2,8 @@ import { useAuth } from '@/context/AuthContext';
 import { useOrders } from '@/hooks/useOrder';
 import { Skeleton } from '@/components/ui/skeleton';
 import MessageContent from '@/components/Shared/MessageContent';
-import OrderList from '@/components/Order/OrderList';
 import OrderStatus from '@/components/Order/OrderStatus';
+import OrderBox from '@/components/Order/OrderBox';
 
 
 const HistoryPage = () => {
@@ -27,7 +27,12 @@ const HistoryPage = () => {
   return (
     <div className='relative flex flex-col gap-y-6 p-6'>
       <OrderStatus orders={orders} />
-      <OrderList orders={orders} />
+
+      <div className='flex flex-col gap-y-8 mt-4'>
+        {orders.map((order) => (
+          <OrderBox key={order.orderId} order={order} />
+        ))}
+      </div>
     </div>
   );
 }

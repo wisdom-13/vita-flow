@@ -47,6 +47,7 @@ export interface Order {
   items: OrderItem[];
   status: OrderStatus;
   createAt: Timestamp;
+  cancelAt?: Timestamp;
 }
 
 export type OrderStatus = '주문 완료' | '발송 대기' | '발송 시작' | '주문 취소';

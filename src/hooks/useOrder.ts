@@ -1,5 +1,5 @@
-import { fetchOrders, saveOrder } from '@/services/firebaseService';
-import { Cart, Order, Payment } from '@/types/types';
+import { fetchOrders, saveOrder, updateStatusOrder } from '@/services/firebaseService';
+import { Cart, Order, OrderStatus, Payment } from '@/types/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Timestamp } from 'firebase/firestore';
 
@@ -12,6 +12,21 @@ export const useOrders = (userId?: string) => {
     staleTime: 1000 * 60,
   });
 };
+
+export const useUpdateOrder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (
+      { orderId, status }: { orderId: string, status: OrderStatus }
+    ) => {
+      await updateStatusOrder(orderId, status);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+    }
+  })
+}
+
 
 export const useAddOrder = () => {
   const queryClient = useQueryClient();

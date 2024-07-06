@@ -1,13 +1,17 @@
 import MessageContent from '@/components/Shared/MessageContent';
-import { useSearchParams } from 'react-router-dom';
+import { useProcessOrder } from '@/hooks/useProcessOrder';
 
 const PaymentSuccessPage = () => {
-  const [searchParams] = useSearchParams();
-  const orderId = searchParams.get('orderId');
+  const { orderId, isError } = useProcessOrder();
+
+  if (isError) {
+    return <MessageContent title='잘못된 접근입니다.' />
+  }
+
   return (
     <div>
       <MessageContent
-        title='주문이 완료되었습니다.'
+        title='💊 주문이 완료되었습니다! '
         content={`주문번호 : ${orderId}`}
         linkText='주문내역'
         to='/mypage/history'

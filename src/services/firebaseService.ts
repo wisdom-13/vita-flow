@@ -1,4 +1,4 @@
-import { Order, Product } from '@/types/types';
+import { Order, OrderStatus, Product } from '@/types/types';
 
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { Timestamp, addDoc, collection, doc, getDoc, updateDoc, deleteDoc, query, orderBy, limit, startAfter, getDocs, where, setDoc } from 'firebase/firestore';
@@ -133,10 +133,13 @@ export const saveOrder = async (order: Order) => {
 };
 
 export const fetchOrders = async (userId?: string) => {
-  if (!userId) return undefined;
 
-  const ordersRef = collection(db, 'orders');
-  const ordersQuery = query(ordersRef, where('userId', '==', userId));
+  let ordersQuery = query(collection(db, 'orders'))
+
+  if (userId) {
+    ordersQuery = query(ordersQuery, where('userId', '==', userId));
+  }
+
   const querySnap = await getDocs(ordersQuery);
 
   const orderList = querySnap.docs.map(doc => ({
@@ -144,4 +147,12 @@ export const fetchOrders = async (userId?: string) => {
   }) as Order);
 
   return orderList;
+};
+
+
+export const updateStatusOrder = async (orderId: string, status: OrderStatus) => {
+  await updateDoc(doc(db, 'orders', orderId), {
+    status: status,
+    cancelAt: Timestamp.now(),
+  });
 };

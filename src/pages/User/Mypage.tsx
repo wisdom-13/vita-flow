@@ -17,7 +17,7 @@ const MypagePage = () => {
         <h3 className='font-semibold text-2xl'>{user.nickname}님 안녕하세요!</h3>
         <p>{user.email}</p>
       </div>
-      <div className='flex flex-col gap-y-4 font-semibold text-xl'>
+      <div className='flex flex-col gap-y-4 mt-8 font-semibold text-xl'>
         <Link to='/mypage/history'>주문/배송 내역</Link>
         <Link to='/mypage/history'>내 정보</Link>
         <Link to='/mypage/history'>내 피타민 정보</Link>

@@ -1,30 +1,12 @@
-import { Order, OrderStatus as OrderStatusType } from '@/types/types';
-import { useEffect, useState } from 'react';
+import { useOrderStatus } from '@/hooks/useOrderStatus';
+import { Order } from '@/types/types';
 
 interface OrderStatusProps {
   orders: Order[];
 }
 
 const OrderStatus: React.FC<OrderStatusProps> = ({ orders }) => {
-  const statuses: OrderStatusType[] = ['주문 완료', '발송 대기', '발송 시작', '주문 취소'];
-
-  const initStatusCount: Record<OrderStatusType, number> = statuses.reduce((acc, status) => {
-    acc[status] = 0;
-    return acc;
-  }, {} as Record<OrderStatusType, number>);
-
-  const [statusCount, setStatusCount] = useState(initStatusCount);
-
-  useEffect(() => {
-    const countOrdersByStatus = orders.reduce((acc, order) => {
-      if (acc[order.status] !== undefined) {
-        acc[order.status]++;
-      }
-      return acc;
-    }, { ...initStatusCount });
-
-    setStatusCount(countOrdersByStatus);
-  }, [orders]);
+  const { statuses, statusCount } = useOrderStatus(orders);
 
   return (
     <div className='flex justify-around items-center my-4'>
