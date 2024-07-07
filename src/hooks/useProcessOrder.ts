@@ -36,7 +36,7 @@ export const useProcessOrder = () => {
     const processOrder = async () => {
       try {
         await mutateAddOrder({ payment, buyProducts });
-        removeSelectCart(buyProducts.map((item) => item.id));
+        removeSelectCart(cart.filter((item) => item.isBuy || item.isPayment).map((item) => item.id));
       } finally {
         setHasProcessed(true);
       }

@@ -24,12 +24,15 @@ export interface Product {
 
 export interface Cart {
   id: string;
+  cartId: string;
+  productId: string;
   userId?: string;
   name: string;
   price: number;
   quantity: number;
   image: string;
   isBuy?: boolean;
+  isPayment?: boolean;
 }
 
 export interface OrderItem {
