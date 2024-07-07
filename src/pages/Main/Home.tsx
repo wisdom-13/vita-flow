@@ -47,14 +47,14 @@ const HomePage = () => {
             <>
               <CardViewSection
                 title={`${user.nickname}님을 위한 추천 영양제`}
-                filters={{ pageSize: 3 }}
+                filters={{ pageSize: 3, productsState: true }}
               />
             </>
           ) : (
             <>
               <CardViewSection
                 title={`많이 찾는 영양제`}
-                filters={{ pageSize: 3, sortBy: 'bySales' }}
+                filters={{ pageSize: 3, sortBy: 'bySales', productsState: true }}
               />
             </>
           )
