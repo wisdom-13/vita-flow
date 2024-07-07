@@ -137,8 +137,7 @@ export const saveOrder = async (order: Order) => {
 };
 
 export const fetchOrders = async (userId?: string) => {
-
-  let ordersQuery = query(collection(db, 'orders'))
+  let ordersQuery = query(collection(db, 'orders'), orderBy('createAt', 'desc'))
 
   if (userId) {
     ordersQuery = query(ordersQuery, where('userId', '==', userId));
