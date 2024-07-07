@@ -56,7 +56,7 @@ const UserIcon = ({ isSeller }: { isSeller?: boolean }) => (
   ) : null
 );
 
-const CartIcon = ({ cartLength, isCartPage, toggleCart }: { cartLength: number, isCartPage: boolean, toggleCart: () => void }) => (
+const CartIcon = ({ cartLength, isCartPage, toggleCart }: { cartLength: number, isCartPage?: boolean, toggleCart: () => void }) => (
   !isCartPage ? (
     <button onClick={toggleCart}>
       <ShoppingBag />
