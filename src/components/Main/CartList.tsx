@@ -1,17 +1,18 @@
+import { Cart, Product } from '@/types/types';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useCart } from '@/context/CartContext';
 import useSelection from '@/hooks/useSelection';
+import { useCartProducts } from '@/hooks/useProducts';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import DialogConfirm from '@/components/Shared/DialogConfirm';
+import MessageContent from '@/components/Shared/MessageContent';
 import CartItem from '@/components/Main/CartItem';
-import { useNavigate } from 'react-router-dom';
-import PriceSection from './PriceSection';
-import { useCartProducts } from '@/hooks/useProducts';
-import MessageContent from '../Shared/MessageContent';
-import { useEffect, useState } from 'react';
-import { Cart, Product } from '@/types/types';
+import PriceSection from '@/components/Main/PriceSection';
 
 const CartList = () => {
   const { cart, removeSelectCart, toggleCart, updateCartIsBuy } = useCart();
@@ -30,6 +31,14 @@ const CartList = () => {
     setSelectedItems(validProducts.map((item) => item.id));
   }, [validProducts.length]);
 
+  if (!cart || cart.length == 0) {
+    return (<MessageContent
+      content='장바구니에 담긴 비타민이 없어요 💊'
+      linkText='비타민 둘러보기'
+      to='/vitamins'
+      onClick={toggleCart}
+    />)
+  }
 
   if (!cartProducts || isError) {
     return (<MessageContent
@@ -48,6 +57,7 @@ const CartList = () => {
   const handleBuy = () => {
     toggleCart();
     updateCartIsBuy(selectedItems, true);
+    navigate('/cart');
     navigate('/orders/payment');
   }
 
