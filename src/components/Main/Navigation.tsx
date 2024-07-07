@@ -1,4 +1,4 @@
-import { List, Search, Home, Pill, User2 } from 'lucide-react';
+import { List, Home, User2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Navigation = () => {
