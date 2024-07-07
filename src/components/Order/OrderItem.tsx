@@ -25,7 +25,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
     <div key={order.orderId} className='flex flex-col gap-y-4'>
       <h3 className='font-semibold'>{formatDate(order.createAt)}
         {order.status == '주문 취소' ? (
-          <span className='pl-2 text-muted-foreground'>{order.status} {order.cancelAt && `(${formatDate(order.cancelAt)})`}</span>
+          <span className='pl-2 text-muted-foreground'>{order.status} {order.updateAt && `(${formatDate(order.updateAt)})`}</span>
         ) : (
           <span className='pl-2 text-primary'>{order.status}</span>
         )}

@@ -1,9 +1,9 @@
+import { OrderStatus } from '@/types/types';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { useOrders } from '@/hooks/useOrder';
 import { useOrderStatus } from '@/hooks/useOrderStatus';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import OrderList from './OrderList';
-import { OrderStatus } from '@/types/types';
+import OrderList from '@/components/Admin/OrderList';
 
 const OrderContent = () => {
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | undefined>('주문 완료');
@@ -29,7 +29,7 @@ const OrderContent = () => {
         ))}
       </div>
 
-      <OrderList orders={orders?.filter((item) => item.status === selectedStatus)} />
+      <OrderList selectedStatus={selectedStatus} orders={orders?.filter((item) => item.status === selectedStatus)} />
     </>
   );
 }

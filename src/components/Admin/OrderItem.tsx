@@ -1,8 +1,8 @@
 import { Order } from '@/types/types';
-import { TableCell, TableRow } from '@/components/ui/table';
-import { Checkbox } from '../ui/checkbox';
 import { cn, formatDate } from '@/lib/utils';
-import OrderProductItem from '../Admin/OrderProductItem';
+import { TableCell, TableRow } from '@/components/ui/table';
+import { Checkbox } from '@/components/ui/checkbox';
+import OrderProductItem from '@/components/Admin/OrderProductItem';
 
 interface OrderItemProps {
   order: Order;
@@ -10,9 +10,7 @@ interface OrderItemProps {
   onProductSelect: (id: string, isChecked: boolean) => void;
 }
 
-
 const OrderItem = ({ order, isSelected, onProductSelect }: OrderItemProps) => {
-
   const handleCheckboxChange = (isChecked: boolean) => {
     onProductSelect(order.orderId, isChecked);
   };

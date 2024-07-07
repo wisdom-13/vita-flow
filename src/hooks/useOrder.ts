@@ -58,3 +58,17 @@ export const useAddOrder = () => {
   });
 };
 
+
+export const useBatchUpdateOrders = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ orderIds, state }: { orderIds: string[], state: OrderStatus }) => {
+      const promises = orderIds.map((id) => updateStatusOrder(id, state));
+      await Promise.all(promises);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+    }
+  });
+};

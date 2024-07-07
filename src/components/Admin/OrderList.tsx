@@ -1,5 +1,9 @@
-import { Order } from '@/types/types';
+import { Order, OrderStatus } from '@/types/types';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 import useSelection from '@/hooks/useSelection';
+import { useBatchUpdateOrders } from '@/hooks/useOrder';
+
 import {
   Table,
   TableBody,
@@ -19,27 +23,36 @@ import { Button } from '@/components/ui/button';
 import OrderItem from '@/components/Admin/OrderItem';
 
 interface OrderListProps {
+  selectedStatus?: OrderStatus;
   orders?: Order[];
 }
 
-const OrderList = ({ orders }: OrderListProps) => {
+const OrderList = ({ selectedStatus, orders }: OrderListProps) => {
+  const { mutate: updateMutate } = useBatchUpdateOrders();
+  const statuses: OrderStatus[] = ['주문 완료', '발송 대기', '발송 시작', '주문 취소'];
 
   const {
     selectedItems,
+    setSelectedItems,
     toggleItemSelection,
     toggleAllItemSelection
-  } = useSelection([]);
+  } = useSelection(orders ? orders : [], false);
+
+  useEffect(() => {
+    setSelectedItems([])
+  }, [selectedStatus])
 
 
-  const handleDatchUpdate = (isStatus: boolean) => {
-    // updateMutate({ productIds: selectedItems, state: isStatus }, {
-    //   onSuccess: () => {
-    //     toast.success(`선택된 상품의 상태가 [${isStatus ? '판매함' : '판매안함'}]으로 변경되었습니다.`);
-    //   },
-    //   onError: () => {
-    //     toast.error('상품 정보를 업데이트하는 중 문제가 발생했습니다.');
-    //   }
-    // })
+  const handleDatchUpdate = (status: OrderStatus) => {
+    updateMutate({ orderIds: selectedItems, state: status }, {
+      onSuccess: () => {
+        toast.success(`선택된 주문 건이 [${status}] 상태로 변경되었습니다.`);
+      },
+      onError: () => {
+        toast.error('주문 상태를 업데이트하는 중 문제가 발생했습니다.');
+      }
+    })
+    setSelectedItems([])
   }
 
   return (
@@ -55,15 +68,14 @@ const OrderList = ({ orders }: OrderListProps) => {
           <TableCell>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant='outline' disabled={selectedItems.length == 0}>선택 판매 상태 변경</Button>
+                <Button variant='outline' disabled={selectedItems.length == 0}>선택 주문 상태 변경</Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align='start'>
-                <DropdownMenuItem onClick={() => handleDatchUpdate(true)}>
-                  판매함으로 변경
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleDatchUpdate(false)}>
-                  판매안함으로 변경
-                </DropdownMenuItem>
+                {statuses.map((status) => (
+                  <DropdownMenuItem onClick={() => handleDatchUpdate(status)}>
+                    [{status}] 상태로 변경
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </TableCell>

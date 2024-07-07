@@ -143,6 +143,7 @@ export const fetchOrders = async (userId?: string) => {
   const querySnap = await getDocs(ordersQuery);
 
   const orderList = querySnap.docs.map(doc => ({
+    id: doc.id,
     ...doc.data()
   }) as Order);
 
@@ -153,6 +154,6 @@ export const fetchOrders = async (userId?: string) => {
 export const updateStatusOrder = async (orderId: string, status: OrderStatus) => {
   await updateDoc(doc(db, 'orders', orderId), {
     status: status,
-    cancelAt: Timestamp.now(),
+    updateAt: Timestamp.now(),
   });
 };
