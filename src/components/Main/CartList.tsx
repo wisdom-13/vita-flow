@@ -15,7 +15,7 @@ import CartItem from '@/components/Main/CartItem';
 import PriceSection from '@/components/Main/PriceSection';
 
 const CartList = () => {
-  const { cart, removeSelectCart, toggleCart, updateCartIsBuy } = useCart();
+  const { cart, removeSelectCart, isCartOpen, toggleCart, updateCartIsBuy } = useCart();
   const { cartProducts, isError } = useCartProducts(cart);
   const [validProducts, setValidProducts] = useState<(Cart & Product)[]>([]);
   const { selectedItems, setSelectedItems, toggleItemSelection, toggleAllItemSelection } = useSelection(validProducts);
@@ -31,12 +31,12 @@ const CartList = () => {
     setSelectedItems(validProducts.map((item) => item.id));
   }, [validProducts.length]);
 
-  if (!cart || cart.length == 0) {
+  if (!cart || cart.filter((item) => !item.isPayment).length == 0) {
     return (<MessageContent
       content='장바구니에 담긴 비타민이 없어요 💊'
       linkText='비타민 둘러보기'
       to='/vitamins'
-      onClick={toggleCart}
+      onClick={isCartOpen ? toggleCart : undefined}
     />)
   }
 
@@ -45,7 +45,7 @@ const CartList = () => {
       content='장바구니에 담긴 비타민을 불러오는 중 문제가 발생했어요 😢'
       linkText='메인으로'
       to='/vitamins'
-      onClick={toggleCart}
+      onClick={isCartOpen ? toggleCart : undefined}
     />)
   }
 
