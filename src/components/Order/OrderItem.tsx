@@ -1,35 +1,48 @@
-import { Cart, OrderItem as OrderItemType } from '@/types/types';
-
-import { Link } from 'react-router-dom';
+import { Order } from '@/types/types';
+import { formatDate } from '@/lib/utils';
+import { toast } from 'sonner';
+import { useUpdateOrder } from '@/hooks/useOrder';
+import { Button } from '@/components/ui/button';
+import DialogConfirm from '@/components/Shared/DialogConfirm';
+import OrderProductItem from '@/components/Order/OrderProductItem';
 
 interface OrderItemProps {
-  product: Cart | OrderItemType;
+  order: Order;
 }
 
-const OrderItem = ({ product }: OrderItemProps) => {
+const OrderItem = ({ order }: OrderItemProps) => {
+  const { mutate } = useUpdateOrder();
+
+  const handleCancel = () => {
+    mutate({
+      orderId: order.orderId,
+      status: '주문 취소'
+    })
+    toast.info('주문을 취소했습니다.')
+  }
+
   return (
-    <div className='relative flex justify-start items-start gap-x-2 text-sm'>
-      <div className='flex flex-1 justify-start items-center gap-x-4'>
-        <Link
-          to={`/vitamin/${product.id}`}
-          className='bg-muted border rounded-md w-24 h-24 overflow-hidden'
+    <div key={order.orderId} className='flex flex-col gap-y-4'>
+      <h3 className='font-semibold'>{formatDate(order.createAt)}
+        {order.status == '주문 취소' ? (
+          <span className='pl-2 text-muted-foreground'>{order.status} {order.updateAt && `(${formatDate(order.updateAt)})`}</span>
+        ) : (
+          <span className='pl-2 text-primary'>{order.status}</span>
+        )}
+      </h3>
+      {order.items.map((item) => (
+        <OrderProductItem key={item.id} product={item} />
+      ))}
+      {order.status == '주문 완료' && (
+        <DialogConfirm
+          title='주문취소'
+          content='선택한 주문을 취소하시겠습니까?'
+          buttonText='확인'
+          buttonOnClick={handleCancel}
         >
-          <img src={product.image} alt={product.name} className='w-full h-full object-cover' />
-        </Link>
-        <div className='flex flex-col flex-1 gap-y-3 pr-3'>
-          <Link
-            to={`/vitamin/${product.id}`}
-            className='flex flex-col gap-y-1'
-          >
-            {/* <BadgeList list={product.category} variant='secondary' /> */}
-            <h3 className='w-56 font-semibold truncate'>{product.name}</h3>
-          </Link>
-          <div className='flex justify-between items-center'>
-            수량 : {product.quantity}
-            <h5 className='font-semibold'>{(product.quantity * product.price).toLocaleString()}원</h5>
-          </div>
-        </div>
-      </div>
+          <Button variant='outline' className='w-full'>주문취소</Button>
+        </DialogConfirm>
+      )}
     </div>
   );
 }

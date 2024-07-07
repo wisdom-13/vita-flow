@@ -41,13 +41,14 @@ export interface OrderItem {
 }
 
 export interface Order {
+  id?: string;
   orderId: string;
   userId: string;
   totalAmount: number;
   items: OrderItem[];
   status: OrderStatus;
   createAt: Timestamp;
-  cancelAt?: Timestamp;
+  updateAt?: Timestamp;
 }
 
 export type OrderStatus = '주문 완료' | '발송 대기' | '발송 시작' | '주문 취소';

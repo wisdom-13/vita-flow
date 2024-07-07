@@ -3,7 +3,7 @@ import { useOrders } from '@/hooks/useOrder';
 import { Skeleton } from '@/components/ui/skeleton';
 import MessageContent from '@/components/Shared/MessageContent';
 import OrderStatus from '@/components/Order/OrderStatus';
-import OrderBox from '@/components/Order/OrderBox';
+import OrderItem from '@/components/Order/OrderItem';
 
 
 const HistoryPage = () => {
@@ -30,7 +30,7 @@ const HistoryPage = () => {
 
       <div className='flex flex-col gap-y-8 mt-4'>
         {orders.map((order) => (
-          <OrderBox key={order.orderId} order={order} />
+          <OrderItem key={order.orderId} order={order} />
         ))}
       </div>
     </div>

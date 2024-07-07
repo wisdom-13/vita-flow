@@ -8,7 +8,6 @@ export const useOrders = (userId?: string) => {
   return useQuery({
     queryKey: ['orders', userId],
     queryFn: () => fetchOrders(userId),
-    enabled: !!userId,
     staleTime: 1000 * 60,
   });
 };
@@ -59,3 +58,17 @@ export const useAddOrder = () => {
   });
 };
 
+
+export const useBatchUpdateOrders = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ orderIds, state }: { orderIds: string[], state: OrderStatus }) => {
+      const promises = orderIds.map((id) => updateStatusOrder(id, state));
+      await Promise.all(promises);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+    }
+  });
+};

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-const useSelection = (items: any[]) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>(items.map((item) => item.id));
+const useSelection = (items: any[], isAllSelected: boolean = true) => {
+  const [selectedItems, setSelectedItems] = useState<string[]>(isAllSelected ? items.map((item) => item.id) : []);
 
   const toggleItemSelection = useCallback((id: string) => {
     setSelectedItems(prev =>
