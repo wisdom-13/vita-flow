@@ -10,8 +10,10 @@ const UserLayout = () => {
   const { cart, toggleCart } = useCart();
 
   let title = '';
+  let cartIconHidden = false;
   if (location.pathname === '/orders/payment') {
     title = '주문하기';
+    cartIconHidden = true;
   } else if (location.pathname === '/mypage') {
     title = '마이페이지';
   } else if (location.pathname === '/mypage/history') {
@@ -26,7 +28,7 @@ const UserLayout = () => {
         <MainHeader.BackButton />
         <MainHeader.Title title={title} />
         <MainHeader.RightSection>
-          <MainHeader.CartIcon cartLength={cart.length} toggleCart={toggleCart} />
+          <MainHeader.CartIcon cartLength={cart.filter((item) => !item.isPayment).length} isHidden={cartIconHidden} toggleCart={toggleCart} />
         </MainHeader.RightSection>
       </MainHeader>
       <div className='pt-[50px] pb-16'>

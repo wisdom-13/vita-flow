@@ -35,7 +35,7 @@ const MainLayout = () => {
         <MainHeader.Title title={title} isMain={isMain} />
         <MainHeader.RightSection>
           <MainHeader.UserIcon isSeller={user?.isSeller && isMain} />
-          <MainHeader.CartIcon cartLength={cart.length} isCartPage={isCartPage} toggleCart={toggleCart} />
+          <MainHeader.CartIcon cartLength={cart.filter((item) => !item.isPayment).length} isHidden={isCartPage} toggleCart={toggleCart} />
         </MainHeader.RightSection>
       </MainHeader>
       <div className='pt-[50px] pb-16'>
