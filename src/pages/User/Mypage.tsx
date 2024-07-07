@@ -19,8 +19,8 @@ const MypagePage = () => {
       </div>
       <div className='flex flex-col gap-y-4 mt-8 font-semibold text-xl'>
         <Link to='/mypage/history'>주문/배송 내역</Link>
-        <Link to='/mypage/history'>내 정보</Link>
-        <Link to='/mypage/history'>내 피타민 정보</Link>
+        {/* <Link to='/mypage/history'>내 정보</Link>
+        <Link to='/mypage/history'>내 피타민 정보</Link> */}
       </div>
       <div className='mt-10'>
         <div className='text-muted-foreground' onClick={handleLogout}>로그아웃</div>
