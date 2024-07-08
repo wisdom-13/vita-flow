@@ -36,7 +36,7 @@ const VitaminCardView = ({ filters, filters: { categories } }: VitaminCardViewPr
 
   if (isLoading) {
     return (
-      <div className='gap-4 grid grid-cols-3'>
+      <div className='gap-4 grid grid-cols-2 md:grid-cols-3'>
         <Skeleton className='rounded-md w-full h-52' />
         <Skeleton className='rounded-md w-full h-52' />
         <Skeleton className='rounded-md w-full h-52' />
@@ -71,7 +71,7 @@ const VitaminCardView = ({ filters, filters: { categories } }: VitaminCardViewPr
   }
 
   return (
-    <div className='gap-4 grid grid-cols-3'>
+    <div className='gap-4 grid grid-cols-2 md:grid-cols-3'>
       {products.map((product: Product) => (
         <CardItem
           key={product.id}

@@ -33,7 +33,7 @@ const CartItem = ({ cartProduct, isSelected, onItemSelect, toggleItemSelection }
   }
 
   const handleLink = () => {
-    navigator(`/vitamin/${cartProduct.id}`);
+    navigator(`/vitamin/${cartProduct.productId}`);
     toggleCart();
   }
 
@@ -41,7 +41,7 @@ const CartItem = ({ cartProduct, isSelected, onItemSelect, toggleItemSelection }
 
   return (
     <div className='relative flex justify-start items-start gap-x-2 text-sm'>
-      <div className='flex justify-center items-center pt-1 w-10 text-center shrink'>
+      <div className='flex justify-center items-center pt-1 w-4 md:w-10 text-center shrink'>
         <Checkbox
           checked={soldOut ? false : isSelected}
           onClick={() => onItemSelect(cartProduct.id)}
@@ -49,7 +49,7 @@ const CartItem = ({ cartProduct, isSelected, onItemSelect, toggleItemSelection }
       </div>
       <div className='flex flex-1 justify-start items-center gap-x-4'>
         <div
-          className='bg-muted border rounded-md w-24 h-24 overflow-hidden'
+          className='bg-muted border rounded-md w-16 md:w-24 h-16 md:h-24 overflow-hidden'
           onClick={handleLink}
         >
           <img src={cartProduct.image} alt={cartProduct.name} className='w-full h-full object-cover' />

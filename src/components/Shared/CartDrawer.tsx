@@ -17,7 +17,7 @@ const CartDrawer = () => {
   return (
     <>
       <Drawer open={isCartOpen}>
-        <DrawerContent isShowBar={false} className='m-auto w-[600px] h-screen'>
+        <DrawerContent isShowBar={false} className='m-auto max-w-[600px] h-screen'>
           <DrawerHeader id='cart-header' className='flex justify-between items-center px-6 py-2 border-b h-[50px]'>
             <button onClick={toggleCart}>
               <X />

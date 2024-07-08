@@ -67,7 +67,7 @@ const CartList = () => {
   return (
     <>
       <div className='flex justify-start items-center gap-x-2 px-6 text-sm'>
-        <div className='flex justify-center items-center pt-1 w-10 text-center'>
+        <div className='flex justify-center items-center pt-1 w-4 md:w-10 text-center'>
           <Checkbox
             checked={selectedItems.length === validProducts.length}
             onClick={toggleAllItemSelection}
@@ -87,7 +87,7 @@ const CartList = () => {
           </DialogConfirm>
         </div>
       </div>
-      <ScrollArea className='h-[calc(100vh-210px)]'>
+      <ScrollArea className='max-w-full h-[calc(100vh-210px)]'>
         <div className='flex flex-col gap-y-8 mb-8 px-6'>
           {cartProducts.map((item) => (
             <CartItem
