@@ -4,11 +4,21 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 import { Timestamp, addDoc, collection, doc, getDoc, updateDoc, deleteDoc, query, orderBy, limit, startAfter, getDocs, where, setDoc } from 'firebase/firestore';
 import { db, storage } from '@/config/firebase';
 import uuid from 'react-uuid';
-
+import imageCompression from 'browser-image-compression';
 
 export const uploadProductImage = async (file: File): Promise<string> => {
-  const storageRef = ref(storage, `products/${uuid()}-${file.name}`);
-  await uploadBytes(storageRef, file);
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 200,
+    useWebWorker: true,
+    fileType: 'image/webp'
+  };
+
+  const compressedFile = await imageCompression(file, options);
+  const newFileName = `${uuid()}-${file.name.split('.')[0]}.webp`;
+  const storageRef = ref(storage, `products/${newFileName}`);
+
+  await uploadBytes(storageRef, compressedFile);
   return getDownloadURL(storageRef);
 };
 
