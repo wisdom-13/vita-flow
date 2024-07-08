@@ -42,12 +42,16 @@ export const updateProductQuantity = async (id: string, quantity: number) => {
   const productSnap = await getDoc(productRef);
 
   if (!productSnap.exists()) {
-    throw new Error('Product does not exist');
+    throw new Error('상품을 찾을 수 없습니다.');
   }
 
   const current = productSnap.data();
   const newQuantity = current.productQuantity - quantity;   // 재고
   const newSales = current.productSales + quantity;         // 판매량
+
+  if (newQuantity <= 0) {
+    throw new Error('상품 수량이 부족합니다.');
+  }
 
   await updateDoc(productRef, { productQuantity: newQuantity, productSales: newSales });
 };
@@ -126,15 +130,14 @@ export const saveOrder = async (order: Order) => {
   const orderDoc = await getDoc(orderRef);
 
   if (orderDoc.exists()) {
-    throw new Error(`Order with ID ${order.orderId} already exists.`);
+    throw new Error('주문 정보를 찾을 수 없습니다.');
   }
 
   await setDoc(orderRef, order);
 };
 
 export const fetchOrders = async (userId?: string) => {
-
-  let ordersQuery = query(collection(db, 'orders'))
+  let ordersQuery = query(collection(db, 'orders'), orderBy('createAt', 'desc'))
 
   if (userId) {
     ordersQuery = query(ordersQuery, where('userId', '==', userId));

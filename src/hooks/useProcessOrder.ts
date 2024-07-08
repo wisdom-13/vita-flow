@@ -12,6 +12,7 @@ export const useProcessOrder = () => {
   const [searchParams] = useSearchParams();
 
   const userId = user?.uid;
+  const userName = user?.nickname;
   const orderId = searchParams.get('orderId');
   const amount = Number(searchParams.get('amount'));
 
@@ -19,7 +20,7 @@ export const useProcessOrder = () => {
   const [isError, setIsError] = useState(false);
 
   const payment = useMemo(() => {
-    return userId && orderId && amount ? { userId, orderId, amount } : null;
+    return userId && orderId && amount ? { userId, userName, orderId, amount } : null;
   }, [userId, orderId, amount]);
 
   const { mutate: mutateAddOrder } = useAddOrder();
@@ -35,7 +36,7 @@ export const useProcessOrder = () => {
     const processOrder = async () => {
       try {
         await mutateAddOrder({ payment, buyProducts });
-        removeSelectCart(buyProducts.map((item) => item.id));
+        removeSelectCart(cart.filter((item) => item.isBuy || item.isPayment).map((item) => item.id));
       } finally {
         setHasProcessed(true);
       }

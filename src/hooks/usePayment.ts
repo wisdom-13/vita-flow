@@ -10,11 +10,12 @@ export const usePayment = (customerName: string) => {
 
   const updateStock = useMutation({
     mutationFn: async ({ cartItems }: { cartItems: (Cart & Product)[] }) => {
-      await Promise.all(cartItems.map(item => updateProductQuantity(item.id, item.quantity)));
+      await Promise.all(cartItems.map(item => updateProductQuantity(item.productId, item.quantity)));
       return 1
     },
-    onError: () => {
+    onError: (error) => {
       // todo: updateProductQuantity -> 수량 0일 경우 오류 처리
+      console.log(error)
       toast.error('결제 정보를 처리하는 중 문제가 발생했습니다.');
     },
     onSuccess: (_, variables) => {
@@ -37,7 +38,7 @@ export const usePayment = (customerName: string) => {
           failUrl: `${originUrl}/orders/fail`,
         })
           .catch(async (error) => {
-            await Promise.all(buyProducts.map(item => updateProductQuantity(item.id, -item.quantity)));
+            await Promise.all(buyProducts.map(item => updateProductQuantity(item.productId, -item.quantity)));
             if (error.code === 'USER_CANCEL') {
               toast.error('결제를 취소했습니다.');
             } else if (error.code === 'INVALID_CARD_COMPANY') {

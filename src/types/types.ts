@@ -24,12 +24,15 @@ export interface Product {
 
 export interface Cart {
   id: string;
+  cartId: string;
+  productId: string;
   userId?: string;
   name: string;
   price: number;
   quantity: number;
   image: string;
   isBuy?: boolean;
+  isPayment?: boolean;
 }
 
 export interface OrderItem {
@@ -44,6 +47,7 @@ export interface Order {
   id?: string;
   orderId: string;
   userId: string;
+  userName?: string | null;
   totalAmount: number;
   items: OrderItem[];
   status: OrderStatus;
@@ -56,6 +60,7 @@ export type OrderStatus = '주문 완료' | '발송 대기' | '발송 시작' | 
 
 export interface Payment {
   userId: string,
+  userName?: string | null;
   orderId: string;
   amount: number;
 }

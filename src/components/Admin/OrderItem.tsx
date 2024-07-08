@@ -22,8 +22,9 @@ const OrderItem = ({ order, isSelected, onProductSelect }: OrderItemProps) => {
           <Checkbox checked={isSelected} onCheckedChange={handleCheckboxChange} />
         </TableCell>
         <TableCell className='w-44'>
-          <b>{order.orderId}</b><br />
-          <span>{formatDate(order.createAt)}</span>
+          <span>{order.orderId}</span><br />
+          <span>{formatDate(order.createAt)}</span><br />
+          <b>{order.userName}</b>
         </TableCell>
         <TableCell className='flex flex-col gap-y-4'>
           {order.items.map((item) => (

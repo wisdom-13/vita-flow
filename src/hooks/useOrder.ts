@@ -37,6 +37,7 @@ export const useAddOrder = () => {
       const order = {
         orderId: payment.orderId,
         userId: payment.userId,
+        userName: payment.userName,
         totalAmount: payment.amount,
         items: buyProducts.map((item: Cart) => ({
           id: item.id,

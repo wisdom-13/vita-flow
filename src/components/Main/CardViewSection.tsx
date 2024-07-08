@@ -39,7 +39,7 @@ const CardViewSection = ({ title, filters, filters: { categories, pageSize = 10 
   return (
     <>
       <h1 className='mb-4 font-semibold text-xl'>{title}</h1>
-      <div className='gap-4 grid grid-cols-3'>
+      <div className='gap-4 grid grid-cols-2 md:grid-cols-3 grid-rows-1 overflow-hidden'>
         {products.map((product: Product) => (
           <CardItem
             key={product.id}

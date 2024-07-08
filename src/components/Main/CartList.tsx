@@ -1,20 +1,21 @@
+import { Cart, Product } from '@/types/types';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useCart } from '@/context/CartContext';
 import useSelection from '@/hooks/useSelection';
+import { useCartProducts } from '@/hooks/useProducts';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import DialogConfirm from '@/components/Shared/DialogConfirm';
+import MessageContent from '@/components/Shared/MessageContent';
 import CartItem from '@/components/Main/CartItem';
-import { useNavigate } from 'react-router-dom';
-import PriceSection from './PriceSection';
-import { useCartProducts } from '@/hooks/useProducts';
-import MessageContent from '../Shared/MessageContent';
-import { useEffect, useState } from 'react';
-import { Cart, Product } from '@/types/types';
+import PriceSection from '@/components/Main/PriceSection';
 
 const CartList = () => {
-  const { cart, removeSelectCart, toggleCart, updateCartIsBuy } = useCart();
+  const { cart, removeSelectCart, isCartOpen, toggleCart, updateCartIsBuy } = useCart();
   const { cartProducts, isError } = useCartProducts(cart);
   const [validProducts, setValidProducts] = useState<(Cart & Product)[]>([]);
   const { selectedItems, setSelectedItems, toggleItemSelection, toggleAllItemSelection } = useSelection(validProducts);
@@ -30,13 +31,21 @@ const CartList = () => {
     setSelectedItems(validProducts.map((item) => item.id));
   }, [validProducts.length]);
 
+  if (!cart || cart.filter((item) => !item.isPayment).length == 0) {
+    return (<MessageContent
+      content='장바구니에 담긴 비타민이 없어요 💊'
+      linkText='비타민 둘러보기'
+      to='/vitamins'
+      onClick={isCartOpen ? toggleCart : undefined}
+    />)
+  }
 
   if (!cartProducts || isError) {
     return (<MessageContent
       content='장바구니에 담긴 비타민을 불러오는 중 문제가 발생했어요 😢'
       linkText='메인으로'
       to='/vitamins'
-      onClick={toggleCart}
+      onClick={isCartOpen ? toggleCart : undefined}
     />)
   }
 
@@ -48,6 +57,7 @@ const CartList = () => {
   const handleBuy = () => {
     toggleCart();
     updateCartIsBuy(selectedItems, true);
+    navigate('/cart');
     navigate('/orders/payment');
   }
 
@@ -57,7 +67,7 @@ const CartList = () => {
   return (
     <>
       <div className='flex justify-start items-center gap-x-2 px-6 text-sm'>
-        <div className='flex justify-center items-center pt-1 w-10 text-center'>
+        <div className='flex justify-center items-center pt-1 w-4 md:w-10 text-center'>
           <Checkbox
             checked={selectedItems.length === validProducts.length}
             onClick={toggleAllItemSelection}
@@ -77,7 +87,7 @@ const CartList = () => {
           </DialogConfirm>
         </div>
       </div>
-      <ScrollArea className='h-[calc(100vh-210px)]'>
+      <ScrollArea className='max-w-full h-[calc(100vh-210px)]'>
         <div className='flex flex-col gap-y-8 mb-8 px-6'>
           {cartProducts.map((item) => (
             <CartItem

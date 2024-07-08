@@ -37,7 +37,7 @@ const VitaminDetail = ({ product }: VitaminDetailProps) => {
         </div>
         <CardViewSection
           title='이런 영양제는 어떠세요?'
-          filters={{ categories: productCategory, pageSize: 3 }}
+          filters={{ categories: productCategory, pageSize: 3, productsState: true }}
         />
       </div>
 

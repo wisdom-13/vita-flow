@@ -33,8 +33,8 @@ export const usePrefetchProducts = (filters: { sortBy?: string, productsState?: 
 export const useCartProducts = (cartItems: Cart[]) => {
   const productQueries = useQueries({
     queries: cartItems.map(item => ({
-      queryKey: ['product', item.id],
-      queryFn: () => fetchProduct(item.id),
+      queryKey: ['cartProducts'],
+      queryFn: () => fetchProduct(item.productId),
       staleTime: 1000 * 60 * 5,
     })),
   });

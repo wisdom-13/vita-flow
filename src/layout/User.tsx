@@ -3,35 +3,34 @@ import { Outlet, useLocation } from 'react-router-dom';
 import MainHeader from '@/components/Main/MainHeader';
 import Navigation from '@/components/Main/Navigation';
 import CartDrawer from '@/components/Shared/CartDrawer';
-import { Home } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
 
 const UserLayout = () => {
   const location = useLocation();
-  let isCardPage = false;
+  const { cart, toggleCart } = useCart();
 
-  let headerText = '';
+  let title = '';
+  let cartIconHidden = false;
   if (location.pathname === '/orders/payment') {
-    headerText = '주문하기';
+    title = '주문하기';
+    cartIconHidden = true;
   } else if (location.pathname === '/mypage') {
-    headerText = '마이페이지';
+    title = '마이페이지';
   } else if (location.pathname === '/mypage/history') {
-    headerText = '주문/배송 내역';
+    title = '주문/배송 내역';
   } else if (location.pathname === '/mypage/info') {
-    headerText = '내정보';
-  }
-
-  const handleRightIconClick = () => {
-
+    title = '내정보';
   }
 
   return (
     <div className='relative flex flex-col justify-between h-screen main'>
-      <MainHeader
-        title={headerText}
-        isCardPage={isCardPage}
-        rightIcon={Home}
-        handleRightIconClick={handleRightIconClick}
-      />
+      <MainHeader>
+        <MainHeader.BackButton />
+        <MainHeader.Title title={title} />
+        <MainHeader.RightSection>
+          <MainHeader.CartIcon cartLength={cart.filter((item) => !item.isPayment).length} isHidden={cartIconHidden} toggleCart={toggleCart} />
+        </MainHeader.RightSection>
+      </MainHeader>
       <div className='pt-[50px] pb-16'>
         <Outlet />
       </div>

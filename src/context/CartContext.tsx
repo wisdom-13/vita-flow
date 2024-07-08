@@ -34,10 +34,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const addCart = (item: Cart) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find(cartItem => cartItem.id === item.id);
-      if (existingItem) {
+      const existingItem = prevCart.find(cartItem => cartItem.productId === item.productId);
+      if (existingItem && !existingItem.isPayment && !item.isPayment) {
         return prevCart.map(cartItem =>
-          cartItem.id === item.id
+          cartItem.productId === item.productId
             ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
             : cartItem
         );

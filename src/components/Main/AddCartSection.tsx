@@ -7,6 +7,8 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import CountSelector from '@/components/Shared/CountSelector';
 import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import uuid from 'react-uuid';
 
 interface AddCartSectionProps {
   id: string;
@@ -15,10 +17,12 @@ interface AddCartSectionProps {
 
 const AddCartSection = ({ id, product }: AddCartSectionProps) => {
   const { user } = useAuth();
-  const { addCart, toggleCart } = useCart();
+  const { addCart, toggleCart, updateCartIsBuy } = useCart();
 
   const [quantity, setQuantity] = useState<number>(1);
   const [isBuy, setIsBuy] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const {
     productName,
@@ -27,24 +31,36 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
     productImage,
   } = product;
 
-  const handleAddToCart = () => {
+  const handleClick = (type: 'cart' | 'payment') => {
+    updateCartIsBuy([], true);
+
+    const cartId = uuid();
     const item = {
-      id,
+      id: cartId,
+      cartId,
+      productId: id,
       userId: user?.uid,
       name: productName,
       price: productPrice,
       image: productImage,
       quantity,
-      isBuy: false,
+      isBuy: type == 'payment',
+      isPayment: type == 'payment',
     };
     addCart(item);
-    toast("선택한 상품을 장바구니에 담았습니다.", {
-      action: {
-        label: "보러가기",
-        onClick: toggleCart,
-      },
-    })
-  };
+
+    if (type == 'cart') {
+      toast("선택한 상품을 장바구니에 담았습니다.", {
+        action: {
+          label: "보러가기",
+          onClick: toggleCart,
+        },
+      })
+    } else if (type == 'payment') {
+      navigate('/orders/payment');
+    }
+  }
+
 
   return (
     <>
@@ -62,8 +78,8 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
       <div className='right-0 bottom-0 left-0 z-[9999] fixed bg-white m-auto px-6 py-4 border-t max-w-[600px]'>
         {isBuy ? (
           <div className='flex gap-x-2'>
-            <Button size='lg' variant='outline' className='w-full' onClick={handleAddToCart}>장바구니 담기</Button>
-            <Button size='lg' className='w-full' onClick={handleAddToCart}>구매하기</Button>
+            <Button size='lg' variant='outline' className='w-full' onClick={() => handleClick('cart')}>장바구니 담기</Button>
+            <Button size='lg' className='w-full' onClick={() => handleClick('payment')}>구매하기</Button>
           </div>
         ) : (
           <Button
