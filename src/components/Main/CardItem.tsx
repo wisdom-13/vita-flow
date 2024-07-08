@@ -19,7 +19,7 @@ const CardItem = ({ product, variant = 'default' }: CardItemProps) => {
   const { prefetchProduct } = usePrefetchProduct(id);
 
   return (
-    <Link to={`/vitamin/${id}`} onMouseEnter={prefetchProduct}>
+    <Link to={`/vitamin/${id}`} onMouseEnter={prefetchProduct} onTouchStart={prefetchProduct}>
       <div className='relative flex flex-col border-muted bg-muted-foreground/5 hover:bg-primary shadow-md hover:shadow-lg border rounded-md w-full hover:text-white transition-all overflow-hidden group'>
         <div className='bg-white w-full h-36'>
           <img src={productImage} alt={productName} className='group-hover:scale-105 w-full h-full transition-all object-cover' />
