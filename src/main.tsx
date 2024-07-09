@@ -12,6 +12,7 @@ import {
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
+import { HelmetProvider } from 'react-helmet-async';
 import { LoadingProvider } from './context/LoadingContext';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -27,9 +28,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <CartProvider>
           <LoadingProvider>
-            <RouterProvider router={routes} />
-            <Toaster position='bottom-center' duration={3000} />
-            <LoadingIndicator />
+            <HelmetProvider>
+              <RouterProvider router={routes} />
+              <Toaster position='bottom-center' duration={3000} />
+              <LoadingIndicator />
+            </HelmetProvider>
           </LoadingProvider>
         </CartProvider>
       </AuthProvider>
