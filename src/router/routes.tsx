@@ -79,6 +79,7 @@ const routes = createBrowserRouter([
         <AuthLayout />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: 'signup',
@@ -101,6 +102,7 @@ const routes = createBrowserRouter([
         <UserLayout />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: 'payment',
@@ -135,6 +137,7 @@ const routes = createBrowserRouter([
         <UserLayout />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -169,6 +172,7 @@ const routes = createBrowserRouter([
         <AdminLayout />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: 'orders',

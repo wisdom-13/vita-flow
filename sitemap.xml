@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 홈 페이지 -->
+  <url>
+    <loc>https://vita-flow.vercel.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 카테고리 페이지 -->
+  <url>
+    <loc>https://vita-flow.vercel.app/category</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 카테고리별 비타민 리스트 페이지 -->
+  <url>
+    <loc>https://vita-flow.vercel.app/category/스트레스</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 모든 비타민 리스트 페이지 -->
+  <url>
+    <loc>https://vita-flow.vercel.app/vitamins</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+</urlset>

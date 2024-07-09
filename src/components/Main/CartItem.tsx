@@ -52,7 +52,7 @@ const CartItem = ({ cartProduct, isSelected, onItemSelect, toggleItemSelection }
           className='bg-muted border rounded-md w-16 md:w-24 h-16 md:h-24 overflow-hidden'
           onClick={handleLink}
         >
-          <img src={cartProduct.image} alt={cartProduct.name} className='w-full h-full object-cover' />
+          <img src={cartProduct.image} loading='lazy' alt={cartProduct.name} className='w-full h-full object-cover' />
         </div>
         <div className='flex flex-col flex-1 gap-y-3 pr-3'>
           <div

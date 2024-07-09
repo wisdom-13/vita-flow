@@ -14,9 +14,9 @@ const CategoryItem = ({ category = '', text, size = 'sm', color = 'white' }: Cat
   const { prefetchProducts } = usePrefetchProducts(filters);
 
   return (
-    <Link to={category ? `/category/${category}` : '/vitamins'} onMouseEnter={prefetchProducts}>
+    <Link to={category ? `/category/${category}` : '/vitamins'} onMouseEnter={prefetchProducts} onTouchStart={prefetchProducts}>
       <div className={cn(
-        'flex justify-center shadow-md items-center gap-y-2 hover:bg-primary rounded-md w-full h-16 hover:text-white transition-all cursor-pointer',
+        'flex justify-center shadow-md items-center gap-y-2 hover:bg-primary rounded-md w-full h-16 hover:text-white hover:scale-105 transition-all cursor-pointer',
         `text-${size}`,
         color == 'primary' && 'border-primary border shadow-none text-primary'
       )}>
