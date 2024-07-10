@@ -17,7 +17,7 @@ interface AddCartSectionProps {
 
 const AddCartSection = ({ id, product }: AddCartSectionProps) => {
   const { user } = useAuth();
-  const { addCart, toggleCart, updateCartIsBuy } = useCart();
+  const { isCartOpen, addCart, toggleCart, updateCartIsBuy } = useCart();
 
   const [quantity, setQuantity] = useState<number>(1);
   const [isBuy, setIsBuy] = useState<boolean>(false);
@@ -58,6 +58,7 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
       })
     } else if (type == 'payment') {
       navigate('/orders/payment');
+      isCartOpen && toggleCart();
     }
   }
 

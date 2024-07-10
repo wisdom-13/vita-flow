@@ -7,7 +7,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer';
 import CartList from '@/components/Main/CartList';
-import { DialogDescription } from '../ui/dialog';
+import { DialogDescription } from '@/components/ui/dialog';
 
 const CartDrawer = () => {
   const { isCartOpen, toggleCart } = useCart();
@@ -17,7 +17,7 @@ const CartDrawer = () => {
   return (
     <>
       <Drawer open={isCartOpen}>
-        <DrawerContent isShowBar={false} className='m-auto max-w-[600px] h-screen'>
+        <DrawerContent isShowBar={false} className='m-auto max-w-[600px] h-[calc(100vh-80px)] md:h-screen'>
           <DrawerHeader id='cart-header' className='flex justify-between items-center px-6 py-2 border-b h-[50px]'>
             <button onClick={toggleCart}>
               <X />
