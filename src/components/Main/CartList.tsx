@@ -16,9 +16,11 @@ import PriceSection from '@/components/Main/PriceSection';
 
 const CartList = () => {
   const { cart, removeSelectCart, isCartOpen, toggleCart, updateCartIsBuy } = useCart();
-  const { cartProducts, isError } = useCartProducts(cart);
+  const { cartProducts, isError } = useCartProducts(cart.filter((item) => !item.isPayment));
   const [validProducts, setValidProducts] = useState<(Cart & Product)[]>([]);
   const { selectedItems, setSelectedItems, toggleItemSelection, toggleAllItemSelection } = useSelection(validProducts);
+
+  console.log(cartProducts)
 
   const navigate = useNavigate();
 
