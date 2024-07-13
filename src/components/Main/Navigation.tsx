@@ -1,9 +1,41 @@
+import { cn } from '@/lib/utils';
 import { List, Home, User2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navigation = () => {
+  const [showNav, setShowNav] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const atBottom = (windowHeight + scrollY + 20) >= documentHeight;
+
+    if (atBottom) {
+      setShowNav(true);
+    } else {
+      setShowNav(scrollY <= lastScrollY);
+    }
+
+    setLastScrollY(scrollY);
+  };
+
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
-    <div className='right-0 bottom-0 left-0 fixed flex justify-around bg-white m-auto p-2 border-t max-w-[600px]'>
+    <div className={cn(
+      'right-0 bottom-0 left-0 fixed flex justify-around bg-white m-auto p-2 border-t max-w-[600px] duration-300',
+      showNav ? 'translate-y-0' : 'translate-y-full'
+    )}>
       <Link to='/category' className='flex flex-col items-center gap-y-1 w-full'>
         <List />
         <span className='font-semibold text-xs cursor-pointer'>카테고리</span>
