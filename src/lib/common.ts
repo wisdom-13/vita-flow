@@ -23,7 +23,7 @@ export const vitaminData = [
 
 export const symptomData = [
   {
-    key: '피로',
+    key: '에너지',
     example: '자도자도 피곤하고\n아침이 힘들다면?',
     answer: '에너지 생산을 돕는 코발라민과 피리독신이 필요한 때!',
     vitamin: ['코발라민', '피리독신']
