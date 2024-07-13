@@ -23,7 +23,7 @@ const UserLayout = () => {
   }
 
   return (
-    <div className='relative flex flex-col justify-between h-screen main'>
+    <div className='relative flex flex-col justify-between h-[100vh-200px] md:h-screen main'>
       <MainHeader>
         <MainHeader.BackButton />
         <MainHeader.Title title={title} />
