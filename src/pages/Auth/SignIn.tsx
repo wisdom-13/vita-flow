@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SignInPage = () => {
   return (
-    <div className='flex flex-col justify-between m-auto py-16 w-4/6 h-[calc(100vh-48px)]'>
+    <div className='flex flex-col justify-between m-auto py-16 w-5/6 md:w-2/3 h-[calc(100vh-48px)]'>
       <SignInForm />
       <div className='text-center'>
         <p className='text-sm'>계정이 없으신가요?</p>

@@ -39,7 +39,7 @@ const DialogConfirm = ({ children, title, content, buttonText, buttonOnClick }: 
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DialogDescription className='text-left text-sm whitespace-pre-line' dangerouslySetInnerHTML={{ __html: content }} />
-        <DialogFooter>
+        <DialogFooter className='gap-y-2'>
           <DialogClose asChild>
             <Button
               variant='secondary'

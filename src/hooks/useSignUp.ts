@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLoading } from '@/context/LoadingContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const formSchema = z.object({
   nickname: z
@@ -25,6 +26,7 @@ const formSchema = z.object({
 
 export const useSignUp = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const { setLoading } = useLoading();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -57,6 +59,13 @@ export const useSignUp = () => {
         nickname: values.nickname,
         createAt: Timestamp.now(),
         updateAt: Timestamp.now(),
+      });
+
+      setUser({
+        uid: user.uid,
+        email: values.email,
+        nickname: values.nickname,
+        isSeller: false,
       });
 
       toast.success('회원가입이 완료되었습니다!');

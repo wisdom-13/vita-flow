@@ -2,7 +2,6 @@ import { Product } from '@/types/types';
 
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { containsAllCategories } from '@/lib/utils';
 import { useProducts } from '@/hooks/useProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import CardItem from './CardItem';
@@ -17,10 +16,9 @@ const CardViewSection = ({ title, filters, filters: { categories, pageSize = 10 
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useProducts(filters);
   let products = data?.pages.flatMap((page: any) => page.products);
 
-
   if (products && categories) {
     products = products.filter((product: Product) =>
-      categories && containsAllCategories(product.productCategory, categories) && product.id != id
+      categories && product.id != id
     ).slice(0, pageSize);
   }
 
