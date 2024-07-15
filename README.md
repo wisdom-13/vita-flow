@@ -11,6 +11,11 @@
 
 종류별 증상별 추천 영양제에 대한 정보를 제공하고 구매할 수 있는 서비스입니다.
 
+**주요기능**
+1. 증상/종류별 영양제 조회
+2. 영양제 구매/조회
+3. 상품 등록/관리와 주문 관리
+
 <br>
 
 ## ⚙️ 개발 환경
@@ -22,13 +27,21 @@
     - **코어 스택** : Typescript, React
     - **상태 관리** : ContextAPI, React Query
     - **스타일링** : Tailwindcss, shadcn/ui
+    - **디자인/설계** : Figma
     - **백엔드 서비스** : Firebase
     - **배포** : vercel
 
 <br>
 
-## 🔧 채택한 개발 기술
+## 🖥️  화면 기획
 
+
+- **와이어프레임** : [Figma 바로가기](https://www.figma.com/design/5n55QUdSErwHKX7kazLVyY/VITAFLOW?node-id=0-1&t=xIDhtygbxxpFGaeY-1)
+- **유저플로우** : [Figma 바로가기](https://www.figma.com/design/5n55QUdSErwHKX7kazLVyY/VITAFLOW?node-id=19-170&t=2o6FZEvoFU4EQUR2-1)
+    
+<br>
+
+## 🔧 채택한 개발 기술
 
 **상태 관리 : ContextAPI**
 
@@ -57,7 +70,6 @@
 
 ## 📂 파일 구조
 
-
 ```
 📦src
  ┣ 📂assets                 # 이미지, CSS, 폰트 등 정적 파일
@@ -78,20 +90,8 @@
 
 <br>
 
-## 🖥️  화면 기획
 
-
-- **와이어프레임** : https://www.figma.com/design/5n55QUdSErwHKX7kazLVyY/VITAFLOW?node-id=0-1&t=xIDhtygbxxpFGaeY-1
-    
-
-    
-- 유저플로우 : https://www.figma.com/design/5n55QUdSErwHKX7kazLVyY/VITAFLOW?node-id=19-170&t=2o6FZEvoFU4EQUR2-1
-    
-  
-
-<br>
-
-## **🌟**  주요기능
+## **🌟**  기능 소개 및 화면 프리뷰
 
 
 ### 1. 증상/종류별 영양제 조회
