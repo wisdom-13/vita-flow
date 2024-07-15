@@ -2,7 +2,6 @@ import { Product } from '@/types/types';
 
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { containsAllCategories } from '@/lib/utils';
 import { useProducts } from '@/hooks/useProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import CardItem from './CardItem';
