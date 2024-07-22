@@ -2,17 +2,21 @@ import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import MainLayout from '@/layout/Main';
-import AuthLayout from '@/layout/Auth';
-import UserLayout from '@/layout/User';
-import AdminLayout from '@/layout/Admin';
 import HomePage from '@/pages/Main/Home';
 import ErrorPage from '@/pages/Shared/Error';
-import VitaminListPage from '@/pages/Main/VitaminList';
-import VitaminDetailPage from '@/pages/Main/VitaminDetail';
-import SignUpPage from '@/pages/Auth/SignUp';
-import SignInPage from '@/pages/Auth/SignIn';
 import { FullScreenSpinner } from '@/components/ui/spinner';
-import CategoryPage from '@/pages/Main/Category';
+
+
+const CategoryPage = lazy(() => import('@/pages/Main/Category'));
+const VitaminListPage = lazy(() => import('@/pages/Main/VitaminList'));
+const VitaminDetailPage = lazy(() => import('@/pages/Main/VitaminDetail'));
+
+const AuthLayout = lazy(() => import('@/layout/Auth'));
+const UserLayout = lazy(() => import('@/layout/User'));
+const AdminLayout = lazy(() => import('@/layout/Admin'));
+
+const SignUpPage = lazy(() => import('@/pages/Auth/SignUp'));
+const SignInPage = lazy(() => import('@/pages/Auth/SignIn'));
 
 const CartPage = lazy(() => import('@/pages/Main/Cart'));
 const HistoryPage = lazy(() => import('@/pages/User/History'));
@@ -41,25 +45,33 @@ const routes = createBrowserRouter([
       {
         path: 'category',
         element: (
-          <CategoryPage />
+          <Suspense fallback={<FullScreenSpinner />}>
+            <CategoryPage />
+          </Suspense>
         ),
       },
       {
         path: 'category/:key',
         element: (
-          <VitaminListPage />
+          <Suspense fallback={<FullScreenSpinner />}>
+            <VitaminListPage />
+          </Suspense>
         ),
       },
       {
         path: 'vitamins',
         element: (
-          <VitaminListPage />
+          <Suspense fallback={<FullScreenSpinner />}>
+            <VitaminListPage />
+          </Suspense>
         ),
       },
       {
         path: 'vitamin/:id',
         element: (
-          <VitaminDetailPage />
+          <Suspense fallback={<FullScreenSpinner />}>
+            <VitaminDetailPage />
+          </Suspense>
         ),
       },
       {
@@ -76,7 +88,9 @@ const routes = createBrowserRouter([
     path: 'auth',
     element: (
       <ProtectedRoute requiredRole='guest'>
-        <AuthLayout />
+        <Suspense fallback={<FullScreenSpinner />}>
+          <AuthLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -99,7 +113,9 @@ const routes = createBrowserRouter([
     path: 'orders',
     element: (
       <ProtectedRoute requiredRole='user'>
-        <UserLayout />
+        <Suspense fallback={<FullScreenSpinner />}>
+          <UserLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -107,25 +123,19 @@ const routes = createBrowserRouter([
       {
         path: 'payment',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <PaymentPage />
-          </Suspense>
+          <PaymentPage />
         ),
       },
       {
         path: 'success',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <PaymentSuccessPage />
-          </Suspense>
+          <PaymentSuccessPage />
         ),
       },
       {
         path: 'fail',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <PaymentFailPage />
-          </Suspense>
+          <PaymentFailPage />
         ),
       },
     ],
@@ -134,7 +144,9 @@ const routes = createBrowserRouter([
     path: 'mypage',
     element: (
       <ProtectedRoute requiredRole='user'>
-        <UserLayout />
+        <Suspense fallback={<FullScreenSpinner />}>
+          <UserLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -142,25 +154,19 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <MypagePage />
-          </Suspense>
+          <MypagePage />
         ),
       },
       {
         path: 'info',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <MyinfoPage />
-          </Suspense>
+          <MyinfoPage />
         ),
       },
       {
         path: 'history',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <HistoryPage />
-          </Suspense>
+          <HistoryPage />
         ),
       },
     ],
@@ -169,7 +175,9 @@ const routes = createBrowserRouter([
     path: 'admin',
     element: (
       <ProtectedRoute requiredRole='admin'>
-        <AdminLayout />
+        <Suspense fallback={<FullScreenSpinner />}>
+          <AdminLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -177,33 +185,25 @@ const routes = createBrowserRouter([
       {
         path: 'orders',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <AdminOrdersPage />
-          </Suspense>
+          <AdminOrdersPage />
         ),
       },
       {
         path: 'products',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <AdminProductsPage />
-          </Suspense>
+          <AdminProductsPage />
         ),
       },
       {
         path: 'product/:id',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <AdminProductModifyPage />
-          </Suspense>
+          <AdminProductModifyPage />
         ),
       },
       {
         path: 'product/new',
         element: (
-          <Suspense fallback={<FullScreenSpinner />}>
-            <AdminProductNewPage />
-          </Suspense>
+          <AdminProductNewPage />
         ),
       },
     ],
