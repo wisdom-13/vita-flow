@@ -34,12 +34,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const addCart = (item: Cart) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find(cartItem => cartItem.productId === item.productId);
-      if (existingItem && !existingItem.isPayment && !item.isPayment) {
-        return prevCart.map(cartItem =>
-          cartItem.productId === item.productId
+      const existingItem = prevCart.find(cartItem => cartItem.productId === item.productId && !cartItem.isPayment);
+      if (existingItem && !item.isPayment) {
+        return prevCart.map(cartItem => {
+          return cartItem.productId === item.productId
             ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
             : cartItem
+        }
         );
       } else {
         return [...prevCart, item];

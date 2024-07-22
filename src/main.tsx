@@ -30,7 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <LoadingProvider>
             <HelmetProvider>
               <RouterProvider router={routes} />
-              <Toaster position='bottom-center' duration={3000} />
+              <Toaster position='bottom-center' duration={1000} />
               <LoadingIndicator />
             </HelmetProvider>
           </LoadingProvider>
