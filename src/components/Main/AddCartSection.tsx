@@ -56,6 +56,8 @@ const AddCartSection = ({ id, product }: AddCartSectionProps) => {
           onClick: toggleCart,
         },
       })
+      setQuantity(1);
+      setIsBuy(false);
     } else if (type == 'payment') {
       navigate('/orders/payment');
       isCartOpen && toggleCart();

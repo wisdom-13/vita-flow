@@ -19,9 +19,6 @@ const CartList = () => {
   const { cartProducts, isError } = useCartProducts(cart.filter((item) => !item.isPayment));
   const [validProducts, setValidProducts] = useState<(Cart & Product)[]>([]);
   const { selectedItems, setSelectedItems, toggleItemSelection, toggleAllItemSelection } = useSelection(validProducts);
-
-  console.log(cartProducts)
-
   const navigate = useNavigate();
 
   useEffect(() => {
